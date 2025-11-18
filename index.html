@@ -214,11 +214,11 @@
   <a href="#gallery">Galleria</a>
 </nav>
 
-<!-- Cambia i nomi con i tuoi file reali in assets/bg -->
 <div class="bg-slideshow" id="bgSlideshow">
-  <img src="assets/bg/bg1.jpg" style="opacity:1">
-  <img src="assets/bg/bg2.jpg">
-  <img src="assets/bg/bg3.jpg">
+  <img src="assets/bg/001.jpg" style="opacity:1">
+  <img src="assets/bg/002.jpg">
+  <img src="assets/bg/003.jpg">
+  <img src="assets/bg/004.jpg">
 </div>
 <div class="bg-overlay"></div>
 
@@ -290,7 +290,6 @@
             <div class="dl-desc">
               Se hai gia scaricato il pacchetto completo in precedenza, ora ti basta scaricare solo i pacchetti update contenenti le ultime mod aggiunte.
               <br><strong>Ultimo update:</strong> 18/11/2025
-              <!-- Cambia la data a mano quando vuoi -->
             </div>
           </div>
           <div class="update-wrapper">
@@ -298,7 +297,6 @@
               Mostra aggiornamenti ?
             </div>
             <div class="update-list" id="updateList">
-              <!-- Esempio update: copia e modifica per altri file -->
               <div class="update-row">
                 <div class="update-row-label">update-1.zip</div>
                 <div class="update-row-desc">
@@ -306,7 +304,6 @@
                 </div>
                 <a class="btn-download btn-secondary" href="downloads/update-1.zip">Scarica</a>
               </div>
-              <!-- altri update-2.zip, update-3.zip, ... -->
             </div>
           </div>
         </div>
@@ -391,7 +388,7 @@
         </div>
         <ul>
           <li><strong>Manca una mod:</strong> scarica l’ultimo update e rimetti nella cartella <code>mods</code>.</li>
-          <li><strong>Versione sbagliata:</strong> usa sempre Forge <code>1.20.1</code> o la tua build Mohist.</li>
+          <li><strong>Versione sbagliata:</strong> usa sempre Forge <code>1.20.1</code> alla sua ultima versione stabile.</li>
           <li><strong>Timeout:</strong> controlla che <code>taxfraud.info</code> risolva e che il server sia online su Discord.</li>
         </ul>
       </div>
@@ -417,19 +414,8 @@
     </div>
     <div class="gallery-grid" id="galleryGrid">
       <p style="font-size:13px;color:var(--text-dim);">
-        Nessuno screenshot è ancora stato caricato.
+        Caricamento galleria...
       </p>
-      <!--
-      Esempio di item:
-      <div class="gallery-item"
-           data-img="gallery/tuofile.png"
-           data-desc="Descrizione dello screenshot">
-        <img class="gallery-thumb"
-             src="gallery/tuofile.png"
-             alt="Descrizione dello screenshot">
-        <div class="gallery-desc">Descrizione dello screenshot</div>
-      </div>
-      -->
     </div>
   </section>
 
@@ -607,7 +593,7 @@
   });
 })();
 
-// STATUS SERVER via API (usa taxfraud.info, funziona su GitHub Pages)
+// STATUS SERVER via API
 (function(){
   const ip = 'taxfraud.info';
   const apiUrl = 'https://api.mcsrvstat.us/3/' + ip;
@@ -648,6 +634,61 @@
 
   aggiornaStatus();
   setInterval(aggiornaStatus, 30000);
+})();
+
+// GALLERIA: carica gallery/descriptions.txt e genera le carte
+(function(){
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+
+  function creaItem(filename, desc){
+    const wrapper = document.createElement('div');
+    wrapper.className = 'gallery-item';
+    wrapper.setAttribute('data-img', 'gallery/' + filename);
+    wrapper.setAttribute('data-desc', desc);
+
+    const img = document.createElement('img');
+    img.className = 'gallery-thumb';
+    img.src = 'gallery/' + filename;
+    img.alt = desc || 'screenshot server';
+
+    const d = document.createElement('div');
+    d.className = 'gallery-desc';
+    d.textContent = desc;
+
+    wrapper.appendChild(img);
+    wrapper.appendChild(d);
+    return wrapper;
+  }
+
+  fetch('gallery/descriptions.txt')
+    .then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    })
+    .then(text => {
+      grid.innerHTML = '';
+      const lines = text.split(/\r?\n/);
+      let has = false;
+
+      lines.forEach(line => {
+        line = line.trim();
+        if (!line || line.startsWith('#')) return;
+        const parts = line.split('|');
+        const filename = (parts[0] || '').trim();
+        const desc = (parts[1] || '').trim();
+        if (!filename) return;
+        grid.appendChild(creaItem(filename, desc));
+        has = true;
+      });
+
+      if (!has) {
+        grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Nessuno screenshot è ancora stato caricato.</p>';
+      }
+    })
+    .catch(() => {
+      grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Impossibile caricare la galleria.</p>';
+    });
 })();
 </script>
 
