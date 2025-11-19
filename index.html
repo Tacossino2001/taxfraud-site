@@ -1,710 +1,1041 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TaxFraud - a beautiful world</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TaxFraud - a beautiful world</title>
 
-  <style>
-  :root{
-    --text-main:#eef3fb;
-    --text-dim:#9ca6ba;
-    --radius-xl:24px;
-    --radius-md:16px;
-    --radius-sm:12px;
-    --glass-bg-main:rgba(15,15,20,0.28);
-    --glass-bg-inner:rgba(15,15,20,0.45);
-    --glass-border:rgba(255,255,255,0.18);
-    --glass-shadow-big:0 30px 80px rgba(0,0,0,.8);
-    --glass-shadow-inner:0 20px 40px rgba(0,0,0,.8);
-    --btn-press-scale:0.97;
-    --btn-hover-scale:1.03;
-    --gallery-hover-scale:1.03;
-    --viewer-open-scale:1.04;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    min-height:100vh;
-    font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial;
-    color:var(--text-main);
-    background-color:#000;
-    overflow-x:hidden;
-    position:relative;
-    -webkit-font-smoothing:antialiased;
-  }
-  /* bg */
-  .bg-slideshow{
-    position:fixed;inset:0;overflow:hidden;z-index:-4;background:#000;
-  }
-  .bg-slideshow img{
-    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:none;opacity:0;transition:opacity 1.2s ease;transform-origin:center center;animation:slow-pan 12s ease-in-out infinite;
-  }
-  @keyframes slow-pan{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
-  .bg-overlay{
-    position:fixed;inset:0;z-index:-3;pointer-events:none;background:radial-gradient(circle at 50% 30%,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.55) 70%);mix-blend-mode:multiply;animation:overlay-breathe 6s ease-in-out infinite;
-  }
-  @keyframes overlay-breathe{0%{opacity:0.9}50%{opacity:0.8}100%{opacity:0.9}}
-  /* nav sticky */
-  .top-nav{
-    position:fixed;top:0;left:0;right:0;z-index:999;display:flex;gap:12px;align-items:center;justify-content:center;background:rgba(5,5,9,0.35);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid rgba(255,255,255,0.12);padding:10px 14px;
-  }
-  .top-nav a{
-    font-size:13px;color:var(--text-main);text-decoration:none;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.1);border-radius:999px;padding:4px 12px;transition:transform .12s ease, filter .12s ease;
-  }
-  .top-nav a:hover{transform:scale(1.02);filter:brightness(1.1);}
-  /* page */
-  .page{
-    max-width:1200px;margin:0 auto;padding:70px 20px 100px;display:flex;flex-direction:column;gap:32px;
-  }
-  /* glass base */
-  .header-box,
-  .glass-card,
-  .gallery-card,
-  .tutorial-card,
-  .mod-list-card{
-    background:var(--glass-bg-main);
-    border:1px solid var(--glass-border);
-    border-radius:var(--radius-xl);
-    backdrop-filter: blur(20px) brightness(1.05) saturate(1.3);
-    -webkit-backdrop-filter: blur(20px) brightness(1.05) saturate(1.3);
-    box-shadow:var(--glass-shadow-big);
-    padding:24px;
-    position:relative;
-  }
-  .header-box{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;}
-  .server-name{font-size:32px;font-weight:700;line-height:1.2;}
-  .server-desc{font-size:14px;line-height:1.4;color:var(--text-dim);max-width:520px;text-align:center;}
-  /* status grid */
-  .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:8px;width:100%;}
-  .status-card{background:var(--glass-bg-inner);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:12px;}
-  .status-label{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-dim);margin-bottom:4px;}
-  .status-value{font-size:15px;font-weight:600;}
-  .status-online{color:#7CFF94;}
-  .status-offline{color:#FF6E6E;}
-  /* main grid */
-  .main-sections{display:grid;gap:24px;}
-  @media(min-width:900px){.main-sections{grid-template-columns:1fr 1fr;}}
-  .card-head{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
-  .card-title{font-size:16px;font-weight:600;}
-  .card-sub{font-size:13px;color:var(--text-dim);}
-  .info-block{display:flex;flex-direction:column;gap:16px;}
-  .info-row{
-    background:var(--glass-bg-inner);border:1px solid var(--glass-border);border-radius:var(--radius-md);
-    backdrop-filter: blur(16px) brightness(1.05) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) brightness(1.05) saturate(1.2);
-    box-shadow:var(--glass-shadow-inner);padding:16px;display:flex;flex-direction:column;gap:10px;
-    transition:box-shadow .18s ease, transform .18s ease, filter .18s ease;
-  }
-  .info-row:hover{box-shadow:0 30px 80px rgba(0,0,0,.9);transform:translateY(-1px);filter:brightness(1.07);}
-  .info-label{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;font-weight:500;}
-  .info-value{font-size:15px;line-height:1.4;font-weight:500;color:var(--text-main);word-break:break-all;font-family:ui-monospace,Consolas,Menlo,monospace;}
-  .info-value a{color:var(--text-main);text-decoration:none;word-break:break-all;}
-  /* download */
-  .download-box{display:flex;flex-direction:column;gap:16px;}
-  .dl-item{
-    background:var(--glass-bg-inner);border:1px solid var(--glass-border);border-radius:var(--radius-md);
-    backdrop-filter: blur(16px) brightness(1.05) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) brightness(1.05) saturate(1.2);
-    box-shadow:var(--glass-shadow-inner);
-    padding:16px;display:flex;flex-direction:column;gap:10px;
-  }
-  .dl-top{display:flex;flex-direction:column;gap:4px;}
-  .dl-name{font-size:15px;font-weight:600;}
-  .dl-desc{font-size:13px;color:var(--text-dim);}
-  .btn-download{
-    display:inline-block;text-decoration:none;text-align:center;font-weight:600;font-size:14px;line-height:1.2;
-    padding:10px 14px;min-width:140px;color:var(--text-main);
-    background:var(--glass-bg-inner);border:1px solid var(--glass-border);border-radius:var(--radius-sm);
-    backdrop-filter: blur(16px) brightness(1.08) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) brightness(1.08) saturate(1.2);
-    box-shadow:0 20px 40px rgba(0,0,0,.8);
-    cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
-  }
-  .btn-download:hover{transform:scale(1.03) translateY(-1px);box-shadow:0 30px 80px rgba(0,0,0,.9);filter:brightness(1.07);}
-  .btn-download:active{transform:scale(.97) translateY(0);box-shadow:0 10px 30px rgba(0,0,0,.7);filter:brightness(0.95);}
-  .btn-secondary{background:rgba(0,0,0,0.35);}
-  .update-wrapper{display:flex;flex-direction:column;gap:10px;}
-  .update-list{display:none;flex-direction:column;gap:10px;}
-  .update-list.active{display:flex;}
-  .update-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;border-top:1px solid rgba(255,255,255,.18);padding-top:10px;}
-  .update-row-label{font-size:14px;font-weight:600;}
-  .update-row-desc{font-size:12px;color:var(--text-dim);max-width:260px;line-height:1.4;}
-  /* tutorial */
-  .tutorial-tabs{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
-  .tutorial-tab{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.18);border-radius:12px;padding:8px 14px;font-size:13px;cursor:pointer;transition:transform .1s ease, filter .1s ease;}
-  .tutorial-tab.active{background:var(--glass-bg-inner);filter:brightness(1.1);}
-  .tutorial-tab:hover{transform:scale(1.02);}
-  .tutorial-content{background:rgba(0,0,0,0.15);border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:14px 16px;font-size:14px;line-height:1.5;color:var(--text-dim);}
-  .tutorial-content h4{font-size:14px;color:var(--text-main);margin-bottom:6px;}
-  .tutorial-content ul,.tutorial-content ol{margin-left:18px;margin-bottom:6px;}
-  .tutorial-content code{background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:2px 6px;font-size:12px;}
-  /* mod list */
-  .mod-list-card ul{list-style:none;display:grid;gap:10px;}
-  .mod-pill{
-    background:var(--glass-bg-inner);border:1px solid var(--glass-border);border-radius:var(--radius-md);
-    padding:10px 12px;display:flex;flex-direction:column;gap:2px;
-    transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
-  }
-  .mod-pill:hover{
-    transform:translateY(-2px);
-    box-shadow:0 30px 80px rgba(0,0,0,.9);
-    filter:brightness(1.05);
-  }
-  .mod-pill-title{font-weight:600;font-size:13px;}
-  .mod-pill-text{font-size:12px;color:var(--text-dim);}
-  .support-card,
-  .maintenance-card{
-    background:var(--glass-bg-inner);border:1px solid var(--glass-border);border-radius:var(--radius-md);
-    padding:16px;transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
-  }
-  .support-card:hover,
-  .maintenance-card:hover{
-    transform:translateY(-2px);
-    box-shadow:0 30px 80px rgba(0,0,0,.9);
-    filter:brightness(1.05);
-  }
-  .support-card ul,
-  .maintenance-card ul{margin-left:18px;line-height:1.4;font-size:13px;color:var(--text-dim);}
-  /* gallery */
-  .gallery-head{margin-bottom:16px;}
-  .gallery-title{font-size:16px;font-weight:600;}
-  .gallery-sub{font-size:13px;color:var(--text-dim);max-width:600px;}
-  .gallery-grid{display:grid;gap:16px;}
-  @media(min-width:700px){.gallery-grid{grid-template-columns:repeat(3,1fr);}}
-  .gallery-item{
-    background:var(--glass-bg-inner);border:1px solid var(--glass-border);border-radius:var(--radius-md);
-    backdrop-filter: blur(16px) brightness(1.05) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) brightness(1.05) saturate(1.2);
-    box-shadow:var(--glass-shadow-inner);padding:12px;display:flex;flex-direction:column;gap:10px;cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
-  }
-  .gallery-item:hover{transform:scale(1.03) translateY(-2px);box-shadow:0 30px 80px rgba(0,0,0,.9);filter:brightness(1.07);}
-  .gallery-thumb{width:100%;border-radius:var(--radius-sm);aspect-ratio:16/9;object-fit:cover;border:1px solid rgba(255,255,255,.18);}
-  .gallery-desc{font-size:12px;color:var(--text-dim);line-height:1.4;min-height:2.8em;}
-  /* viewer */
-  .viewer{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:20px;z-index:9999;opacity:0;transition:opacity .18s ease;}
-  .viewer.active{display:flex;opacity:1;}
-  .viewer-inner{max-width:90vw;max-height:90vh;display:flex;flex-direction:column;gap:12px;transform:scale(.9);transition:transform .18s ease;}
-  .viewer.active .viewer-inner{transform:scale(1.04);}
-  .viewer-img{max-width:90vw;max-height:70vh;object-fit:contain;border-radius:var(--radius-md);box-shadow:0 40px 120px rgba(0,0,0,.9);transition:transform .18s ease;}
-  .viewer.active .viewer-img{transform:scale(1.02);}
-  .viewer-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px;}
-  .viewer-text{font-size:14px;color:#fff;line-height:1.4;flex:1 1 auto;min-width:200px;max-width:60ch;word-break:break-word;}
-  .viewer-actions{display:flex;flex-wrap:wrap;gap:10px;}
-  .viewer-btn{font-size:14px;font-weight:600;text-align:center;text-decoration:none;color:var(--text-main);min-width:110px;padding:10px 14px;border-radius:var(--radius-sm);cursor:pointer;display:inline-block;background:var(--glass-bg-inner);border:1px solid var(--glass-border);backdrop-filter: blur(16px) brightness(1.05) saturate(1.2);-webkit-backdrop-filter: blur(16px) brightness(1.05) saturate(1.2);box-shadow:0 20px 40px rgba(0,0,0,.8);transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;}
-  .viewer-btn:hover{transform:scale(1.03) translateY(-1px);box-shadow:0 30px 80px rgba(0,0,0,.9);filter:brightness(1.07);}
-  .viewer-btn:active{transform:scale(.97) translateY(0);box-shadow:0 10px 30px rgba(0,0,0,.7);filter:brightness(0.95);}
-  footer{text-align:center;color:var(--text-dim);font-size:12px;line-height:1.4;}
-  footer code{font-family:ui-monospace,Consolas,Menlo,monospace;font-size:12px;color:var(--text-main);background:var(--glass-bg-inner);border:1px solid var(--glass-border);border-radius:var(--radius-sm);padding:2px 6px;}
-  @media(max-width:600px){
-    .viewer-img{max-height:80vh;}
-    .viewer-row{flex-direction:column;align-items:stretch;}
-    .viewer-actions{width:100%;justify-content:space-between;}
-    .viewer-btn{flex:1 1 auto;text-align:center;}
-  }
-  </style>
+  <style>
+  /* --- PALETTE E VAR STILE "VICE CITY" / GTA6 --- */
+  :root{
+    --text-main: #ffffff;
+    --text-dim: #a0a0a0;
+    --text-dark: #000000;
+    
+    --accent-pink: #FF00A8;
+    --accent-orange: #FF6600;
+    --accent-cyan: #00FFFF;
+    --accent-green: #00FF00;
+    --accent-red: #FF0000;
+
+    --bg-main: #000000;
+    --card-bg: rgba(0,0,0,0.85);
+    --card-bg-inner: rgba(0,0,0,0.6);
+    --card-border: rgba(255,255,255,0.1);
+    --card-border-inner: rgba(255,255,255,0.15);
+    
+    --radius-md: 8px;
+    --radius-sm: 4px;
+    
+    --font-main: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    --font-heading: Impact, "Arial Black", sans-serif;
+    --font-mono: 'Courier New', Courier, monospace;
+
+    /* transizioni e animazioni */
+    --btn-press-scale: 0.98;
+    --btn-hover-scale: 1.03;
+    --gallery-hover-scale: 1.03;
+    --viewer-open-scale: 1.02; /* ridotto per un feel più netto */
+  }
+  
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  body{
+    min-height:100vh;
+    font-family: var(--font-main);
+    color:var(--text-main);
+    background-color: var(--bg-main);
+    overflow-x:hidden;
+    position:relative;
+    -webkit-font-smoothing:antialiased;
+  }
+  
+  /* --- BG E OVERLAY STILE GTA --- */
+  .bg-slideshow{
+    position:fixed;inset:0;overflow:hidden;z-index:-4;background:#000;
+  }
+  .bg-slideshow img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;
+    /* transizione più veloce */
+    transition:opacity 0.8s ease;
+    transform-origin:center center;
+    animation:slow-pan 12s ease-in-out infinite;
+  }
+  @keyframes slow-pan{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+  
+  /* Vignettatura */
+  .bg-overlay{
+    position:fixed;inset:0;z-index:-3;pointer-events:none;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    animation: screen-flicker 15s ease-in-out infinite;
+  }
+  
+  /* Scanlines (effetto TV) */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.3) 50.5%);
+    background-size: 100% 4px;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  @keyframes screen-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+    50.1% { opacity: 1; }
+    70% { opacity: 0.9; }
+    70.2% { opacity: 1; }
+    70.4% { opacity: 0.85; }
+    70.6% { opacity: 1; }
+  }
+  
+  /* --- NAV STILE GTA --- */
+  .top-nav{
+    position:fixed;top:0;left:0;right:0;z-index:999;
+    display:flex;gap: 4px; /* Riduci gap */
+    align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.8);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom: 2px solid var(--accent-pink);
+    padding: 8px 14px;
+  }
+  .top-nav a{
+    font-size: 13px;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color:var(--text-main);
+    text-decoration:none;
+    background: transparent;
+    border: none;
+    border-radius: 0; /* no radius */
+    padding: 8px 16px;
+    transition: all .2s ease;
+  }
+  .top-nav a:hover{
+    transform:none;
+    filter:none;
+    background: var(--accent-pink);
+    color: var(--text-dark);
+  }
+  
+  /* --- LAYOUT PAGINA --- */
+  .page{
+    max-width:1200px;margin:0 auto;padding:80px 20px 100px;
+    display:flex;flex-direction:column;gap:32px;
+  }
+  
+  /* --- CARD STILE GTA --- */
+  .header-box,
+  .glass-card,
+  .gallery-card,
+  .tutorial-card,
+  .mod-list-card{
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    /* Meno blur, più dark */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.6); /* Ombra più netta */
+    padding: 24px;
+    position:relative;
+    /* Bordo accentato */
+    border-top: 4px solid var(--accent-orange);
+  }
+  /* Header box usa il rosa */
+  .header-box {
+    border-top-color: var(--accent-pink);
+  }
+
+  .header-box{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;}
+  
+  /* FONT HEADING GRINTOSO */
+  .server-name{
+    font-family: var(--font-heading);
+    font-size: 5rem; /* Molto più grande */
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: var(--accent-pink);
+    text-shadow: 0 0 4px rgba(0,0,0,0.8), 0 0 10px var(--accent-pink), 0 0 20px var(--accent-pink);
+  }
+  .server-desc{
+    font-size:16px; /* Più leggibile */
+    line-height:1.5;
+    color:var(--text-dim);
+    max-width:520px;
+    text-align:center;
+    font-family: var(--font-main);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+  
+  /* status grid */
+  .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:8px;width:100%;}
+  .status-card{
+    background:var(--card-bg-inner);
+    border: 1px solid var(--card-border-inner);
+    border-radius:var(--radius-sm);
+    padding:12px;
+  }
+  .status-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--text-dim);
+    margin-bottom:4px;
+    font-weight: 700;
+  }
+  .status-value{font-size:16px;font-weight:700;}
+  .status-online{color: var(--accent-green);}
+  .status-offline{color: var(--accent-red);}
+  
+  /* grid principale */
+  .main-sections{display:grid;gap:24px;}
+  @media(min-width:900px){.main-sections{grid-template-columns:1fr 1fr;}}
+  
+  .card-head{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .card-title{
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-cyan);
+  }
+  .card-sub{font-size:14px;color:var(--text-dim); text-transform: uppercase;}
+  
+  .info-block{display:flex;flex-direction:column;gap:16px;}
+  .info-row{
+    background:var(--card-bg-inner);
+    border:1px solid var(--card-border-inner);
+    border-radius:var(--radius-sm);
+    backdrop-filter: none;
+    box-shadow: none;
+    padding:16px;
+    display:flex;flex-direction:column;gap:10px;
+    transition: all .18s ease;
+  }
+  .info-row:hover{
+    box-shadow: none;
+    transform:translateY(-2px);
+    background: rgba(255,255,255,0.05);
+    border-color: var(--accent-cyan);
+  }
+  .info-label{font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;font-weight:700;}
+  .info-value{
+    font-size:16px;
+    line-height:1.4;
+    font-weight:700;
+    color:var(--text-main);
+    word-break:break-all;
+    font-family: var(--font-mono);
+  }
+  .info-value a{color:var(--text-main);text-decoration:none;word-break:break-all;}
+  
+  /* download */
+  .download-box{display:flex;flex-direction:column;gap:16px;}
+  .dl-item{
+    background:var(--card-bg-inner);
+    border:1px solid var(--card-border-inner);
+    border-radius:var(--radius-sm);
+    backdrop-filter: none;
+    box-shadow: none;
+    padding:16px;display:flex;flex-direction:column;gap:10px;
+  }
+  .dl-top{display:flex;flex-direction:column;gap:4px;}
+  .dl-name{font-size:16px;font-weight:700; text-transform: uppercase;}
+  .dl-desc{font-size:14px;color:var(--text-dim); line-height: 1.5;}
+  
+  /* --- BOTTONI STILE GTA --- */
+  .btn-download{
+    display:inline-block;text-decoration:none;text-align:center;
+    font-family: var(--font-heading);
+    font-weight:700;
+    font-size:15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height:1.2;
+    padding: 12px 16px;
+    min-width:140px;
+    /* Stile "Hollow" */
+    color: var(--accent-pink);
+    background: transparent;
+    border: 2px solid var(--accent-pink);
+    border-radius: var(--radius-sm);
+    backdrop-filter: none;
+    box-shadow: none;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .btn-download:hover{
+    transform:scale(var(--btn-hover-scale));
+    box-shadow: 0 0 15px var(--accent-pink);
+    filter:none;
+    background: var(--accent-pink);
+    color: var(--text-dark);
+  }
+  .btn-download:active{
+    transform:scale(var(--btn-press-scale));
+    box-shadow:none;
+    filter:brightness(0.8);
+  }
+  
+  /* Bottone secondario (Ciano) */
+  .btn-secondary{
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+  }
+  .btn-secondary:hover{
+    background: var(--accent-cyan);
+    color: var(--text-dark);
+    box-shadow: 0 0 15px var(--accent-cyan);
+  }
+  
+  .update-wrapper{display:flex;flex-direction:column;gap:10px;}
+  .update-list{display:none;flex-direction:column;gap:10px;}
+  .update-list.active{display:flex;}
+  .update-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;justify-content:space-between;border-top:1px solid var(--card-border-inner);padding-top:10px;}
+  .update-row-label{font-size:15px;font-weight:700; text-transform: uppercase;}
+  .update-row-desc{font-size:13px;color:var(--text-dim);max-width:260px;line-height:1.4;}
+  
+  /* tutorial */
+  .tutorial-tabs{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  /* Stile Tab come bottoni secondari */
+  .tutorial-tab{
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: transparent;
+    border: 2px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    font-size:13px;
+    cursor:pointer;
+    transition: all .15s ease;
+  }
+  .tutorial-tab:hover{
+    transform:scale(var(--btn-hover-scale));
+    background: var(--accent-cyan);
+    color: var(--text-dark);
+    box-shadow: 0 0 15px var(--accent-cyan);
+  }
+  .tutorial-tab.active{
+    background: var(--accent-cyan);
+    color: var(--text-dark);
+    filter:none;
+    box-shadow: 0 0 15px var(--accent-cyan);
+  }
+  
+  .tutorial-content{
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--card-border-inner);
+    border-radius: var(--radius-sm);
+    padding:16px 20px;
+    font-size:15px;
+    line-height:1.6;
+    color:var(--text-dim);
+  }
+  .tutorial-content h4{font-size:16px;color:var(--text-main);margin-bottom:8px; text-transform: uppercase; font-weight: 700;}
+  .tutorial-content ul,.tutorial-content ol{margin-left:20px;margin-bottom:10px; display: flex; flex-direction: column; gap: 8px;}
+  .tutorial-content code{
+    background: #111;
+    border:1px solid #333;
+    border-radius: var(--radius-sm);
+    padding:3px 6px;
+    font-size:13px;
+    color: var(--accent-orange);
+    font-family: var(--font-mono);
+  }
+  
+  /* mod list */
+  .mod-list-card ul{list-style:none;display:grid;gap:10px;}
+  .mod-pill{
+    background:var(--card-bg-inner);
+    border:1px solid var(--card-border-inner);
+    border-radius:var(--radius-sm);
+    padding:12px 14px;
+    display:flex;flex-direction:column;gap:2px;
+    transition:all .15s ease;
+  }
+  .mod-pill:hover{
+    transform:translateY(-2px);
+    box-shadow: none;
+    background: rgba(255,255,255,0.05);
+    border-color: var(--accent-cyan);
+  }
+  .mod-pill-title{font-weight:700;font-size:14px; text-transform: uppercase;}
+  .mod-pill-text{font-size:13px;color:var(--text-dim); line-height: 1.4;}
+  
+  .support-card,
+  .maintenance-card{
+    background:var(--card-bg-inner);
+    border:1px solid var(--card-border-inner);
+    border-radius:var(--radius-sm);
+    padding:16px;
+    transition: all .15s ease;
+  }
+  .support-card:hover,
+  .maintenance-card:hover{
+    transform:translateY(-2px);
+    box-shadow: none;
+    background: rgba(255,255,255,0.05);
+    border-color: var(--accent-orange);
+  }
+  .support-card ul,
+  .maintenance-card ul{margin-left:18px;line-height:1.5;font-size:14px;color:var(--text-dim); display: flex; flex-direction: column; gap: 6px;}
+  
+  /* --- GALLERIA --- */
+  .gallery-head{margin-bottom:16px;}
+  .gallery-title{
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent-cyan);
+  }
+  .gallery-sub{font-size:14px;color:var(--text-dim);max-width:600px; text-transform: uppercase;}
+  .gallery-grid{display:grid;gap:16px;}
+  @media(min-width:700px){.gallery-grid{grid-template-columns:repeat(3,1fr);}}
+  .gallery-item{
+    background: var(--card-bg-inner);
+    border:1px solid var(--card-border-inner);
+    border-radius: var(--radius-md);
+    backdrop-filter: none;
+    box-shadow: none;
+    padding:10px;
+    display:flex;flex-direction:column;gap:10px;cursor:pointer;
+    transition:all .15s ease;
+  }
+  .gallery-item:hover{
+    transform:scale(var(--gallery-hover-scale)) translateY(-2px);
+    box-shadow: 0 0 20px var(--accent-cyan);
+    border-color: var(--accent-cyan);
+    filter:none;
+    background: rgba(0,0,0,0.5);
+  }
+  .gallery-thumb{
+    width:100%;
+    border-radius:var(--radius-sm);
+    aspect-ratio:16/9;
+    object-fit:cover;
+    border:1px solid rgba(255,255,255,.1);
+  }
+  .gallery-desc{font-size:13px;color:var(--text-dim);line-height:1.4;min-height:2.8em;}
+  
+  /* --- VIEWER MODALE --- */
+  .viewer{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display:none;align-items:center;justify-content:center;
+    padding:20px;z-index:9999;
+    opacity:0;transition:opacity .18s ease;
+  }
+  .viewer.active{display:flex;opacity:1;}
+  .viewer-inner{
+    max-width:90vw;max-height:90vh;
+    display:flex;flex-direction:column;gap:16px;
+    transform:scale(.95);
+    transition:transform .18s ease;
+  }
+  .viewer.active .viewer-inner{transform:scale(var(--viewer-open-scale));}
+  .viewer-img{
+    max-width:90vw;max-height:70vh;
+    object-fit:contain;
+    border-radius:var(--radius-sm);
+    box-shadow: 0 0 60px rgba(0,0,0,.9);
+    border: 2px solid var(--card-border);
+    transition:transform .18s ease;
+  }
+  .viewer-row{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .viewer-text{font-size:15px;color:#fff;line-height:1.5;flex:1 1 auto;min-width:200px;max-width:60ch;word-break:break-word;}
+  .viewer-actions{display:flex;flex-wrap:wrap;gap:10px;}
+  
+  /* Bottoni nel viewer */
+  .viewer-btn{
+    display:inline-block;text-decoration:none;text-align:center;
+    font-family: var(--font-heading);
+    font-weight:700;
+    font-size:14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height:1.2;
+    padding: 10px 14px;
+    min-width: 110px;
+    /* Stile "Hollow" */
+    color: var(--accent-pink);
+    background: transparent;
+    border: 2px solid var(--accent-pink);
+    border-radius: var(--radius-sm);
+    backdrop-filter: none;
+    box-shadow: none;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .viewer-btn:hover{
+    transform:scale(var(--btn-hover-scale));
+    box-shadow: 0 0 15px var(--accent-pink);
+    background: var(--accent-pink);
+    color: var(--text-dark);
+  }
+  .viewer-btn:active{
+    transform:scale(var(--btn-press-scale));
+    filter:brightness(0.8);
+  }
+  /* Bottone Chiudi (Ciano) */
+  #closeBtn {
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+  }
+  #closeBtn:hover {
+    background: var(--accent-cyan);
+    color: var(--text-dark);
+    box-shadow: 0 0 15px var(--accent-cyan);
+  }
+
+  /* --- FOOTER --- */
+  footer{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:12px;
+    line-height:1.4;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  footer code{
+    font-family: var(--font-mono);
+    font-size:12px;
+    color:var(--accent-orange);
+    background: #111;
+    border:1px solid #333;
+    border-radius:var(--radius-sm);
+    padding:2px 6px;
+  }
+  
+  /* Responsive (già presente, lo teniamo) */
+  @media(max-width:600px){
+    .server-name { font-size: 3.5rem; }
+    .viewer-img{max-height:80vh;}
+    .viewer-row{flex-direction:column;align-items:stretch;}
+    .viewer-actions{width:100%;justify-content:space-between;}
+    .viewer-btn{flex:1 1 auto;text-align:center;}
+  }
+  </style>
 </head>
 <body>
 
 <nav class="top-nav">
-  <a href="#info">Info</a>
-  <a href="#download">Download</a>
-  <a href="#tutorial">Tutorial</a>
-  <a href="#mods">Mod</a>
-  <a href="#gallery">Galleria</a>
+  <a href="#info">Info</a>
+  <a href="#download">Download</a>
+  <a href="#tutorial">Tutorial</a>
+  <a href="#mods">Mod</a>
+  <a href="#gallery">Galleria</a>
 </nav>
 
 <div class="bg-slideshow" id="bgSlideshow">
-  <img src="assets/bg/001.jpg" style="opacity:1">
-  <img src="assets/bg/002.jpg">
-  <img src="assets/bg/003.jpg">
-  <img src="assets/bg/004.jpg">
+  <img src="assets/bg/001.jpg" style="opacity:1">
+  <img src="assets/bg/002.jpg">
+  <img src="assets/bg/003.jpg">
+  <img src="assets/bg/004.jpg">
 </div>
 <div class="bg-overlay"></div>
 
 <div class="page">
 
-  <section class="header-box" id="top">
-    <div class="server-name">TaxFraud</div>
-    <div class="server-desc">
-      IP, Discord, mod pack del server e galleria.
-      Creato dagli evasori, per gli evasori.
-    </div>
-    <div class="status-grid">
-      <div class="status-card">
-        <div class="status-label">Stato server</div>
-        <div class="status-value status-offline" id="mc-status">
-          Caricamento...
-        </div>
-      </div>
-      <div class="status-card">
-        <div class="status-label">Versione</div>
-        <div class="status-value" id="mc-version">1.20.1</div>
-      </div>
-      <div class="status-card">
-        <div class="status-label">Giocatori</div>
-        <div class="status-value" id="mc-players">-</div>
-      </div>
-    </div>
-  </section>
+  <section class="header-box" id="top">
+        <div class="server-name">TaxFraud</div>
+    <div class="server-desc">
+      Creato dagli evasori, per gli evasori.
+    </div>
+    <div class="status-grid">
+      <div class="status-card">
+        <div class="status-label">Stato server</div>
+        <div class="status-value status-offline" id="mc-status">
+          Caricamento...
+        </div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">Versione</div>
+        <div class="status-value" id="mc-version">1.20.1</div>
+      </div>
+      <div class="status-card">
+        <div class="status-label">Giocatori</div>
+        <div class="status-value" id="mc-players">-</div>
+      </div>
+    </div>
+  </section>
 
-  <section class="main-sections">
+  <section class="main-sections">
 
-    <div class="glass-card" id="info">
-      <div class="card-head">
-        <div class="card-title">Info server Minecraft</div>
-        <div class="card-sub">Connessione e community</div>
-      </div>
-      <div class="info-block">
-        <div class="info-row">
-          <div class="info-label">IP del server (clicca per copiare)</div>
-          <div class="info-value" id="ipCopy" style="cursor:pointer;">taxfraud.info</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Discord</div>
-          <div class="info-value">
-            <a href="https://discord.gg/CQxwmRdGsr" target="_blank" rel="noopener">
-              https://discord.gg/CQxwmRdGsr
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="glass-card" id="info">
+      <div class="card-head">
+        <div class="card-title">Info server Minecraft</div>
+        <div class="card-sub">Connessione e community</div>
+      </div>
+      <div class="info-block">
+        <div class="info-row">
+          <div class="info-label">IP del server (clicca per copiare)</div>
+          <div class="info-value" id="ipCopy" style="cursor:pointer;">taxfraud.info</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Discord</div>
+          <div class="info-value">
+            <a href="https://discord.gg/CQxwmRdGsr" target="_blank" rel="noopener">
+              https://discord.gg/CQxwmRdGsr
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <div class="glass-card" id="download">
-      <div class="card-head">
-        <div class="card-title">Materiale illecito</div>
-        <div class="card-sub">Modpack e Update</div>
-      </div>
-      <div class="download-box">
-        <div class="dl-item">
-          <div class="dl-top">
-            <div class="dl-name">Pacchetto completo</div>
-            <div class="dl-desc">Tutte le mod richieste dal server. Scarica questo se entri per la prima volta o se vuoi reinstallare da zero le mod.</div>
-          </div>
-          <!-- FULL MODPACK -> GOOGLE DRIVE -->
-          <a class="btn-download"
-             href="https://drive.google.com/file/d/1KO3W1aJjDgWGU9JPjoOO2bNlorzd_1qo/view?usp=sharing"
-             target="_blank"
-             rel="noopener">
-            Scarica Pacchetto completo (Google Drive)
-          </a>
-        </div>
-        <div class="dl-item">
-          <div class="dl-top">
-            <div class="dl-name">Update recenti</div>
-            <div class="dl-desc">
-              Se hai gia scaricato il pacchetto completo in precedenza, ora ti basta scaricare solo i pacchetti update contenenti le ultime mod aggiunte.
-              <br><strong>Ultimo update:</strong> 18/11/2025
-            </div>
-          </div>
-          <div class="update-wrapper">
-            <div class="btn-download btn-secondary update-toggle" id="toggleUpdates">
-              Mostra aggiornamenti ⬇
-            </div>
-            <div class="update-list" id="updateList">
-              <div class="update-row">
-                <div class="update-row-label">Update 1</div>
-                <div class="update-row-desc">
-                  Questo update aggiunge le ultime mod necessarie per poter accedere al server e goderti al pieno l'esperienza di TaxFraud.
-                </div>
-                <!-- UPDATE 1 -> GOOGLE DRIVE -->
-                <a class="btn-download btn-secondary"
-                   href="https://drive.google.com/file/d/1FT98F1Dv2kCn9g8MEb2gYKH1waixJepE/view?usp=sharing"
-                   target="_blank"
-                   rel="noopener">
-                  Scarica Update 1 (Google Drive)
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="glass-card" id="download">
+      <div class="card-head">
+        <div class="card-title">Materiale illecito</div>
+        <div class="card-sub">Modpack e Update</div>
+      </div>
+      <div class="download-box">
+        <div class="dl-item">
+          <div class="dl-top">
+            <div class="dl-name">Pacchetto completo</div>
+            <div class="dl-desc">Tutte le mod richieste dal server. Scarica questo se entri per la prima volta o se vuoi reinstallare da zero le mod.</div>
+          </div>
+                    <a class="btn-download"
+             href="https://drive.google.com/file/d/1KO3W1aJjDgWGU9JPjoOO2bNlorzd_1qo/view?usp=sharing"
+             target="_blank"
+             rel="noopener">
+            Scarica Pacchetto completo
+          </a>
+        </div>
+        <div class="dl-item">
+          <div class="dl-top">
+            <div class="dl-name">Update recenti</div>
+            <div class="dl-desc">
+              Se hai gia scaricato il pacchetto completo in precedenza, ora ti basta scaricare solo i pacchetti update contenenti le ultime mod aggiunte.
+              <br><strong style="color:var(--text-main);">Ultimo update:</strong> 18/11/2025
+            </div>
+          </div>
+          <div class="update-wrapper">
+            <div class="btn-download btn-secondary update-toggle" id="toggleUpdates">
+              Mostra aggiornamenti ⬇
+            </div>
+            <div class="update-list" id="updateList">
+              <div class="update-row">
+                <div class="update-row-label">Update 1</div>
+                <div class="update-row-desc">
+                  Questo update aggiunge le ultime mod necessarie per poter accedere al server e goderti al pieno l'esperienza di TaxFraud.
+                </div>
+                                <a class="btn-download btn-secondary"
+                   href="https://drive.google.com/file/d/1FT98F1Dv2kCn9g8MEb2gYKH1waixJepE/view?usp=sharing"
+                   target="_blank"
+                   rel="noopener">
+                  Scarica Update 1
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  </section>
+  </section>
 
-  <section class="tutorial-card" id="tutorial">
-    <div class="card-head">
-      <div class="card-title">Tutorial, comandi, pulsanti e regole</div>
-      <div class="card-sub">Tutto quello che devi sapere per poter giocare</div>
-    </div>
-    <div class="tutorial-tabs" id="tutorialTabs">
-      <div class="tutorial-tab active" data-tab="tutorial">Tutorial</div>
-      <div class="tutorial-tab" data-tab="comandi">Comandi</div>
-      <div class="tutorial-tab" data-tab="regole">Regole</div>
-    </div>
-    <div class="tutorial-content" id="tutorialContent">
-      <h4>Come entrare nel server</h4>
-      <ol>
-        <li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
-        <li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
-        <li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
-        <li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
-        <li>Aggiungi il server con IP <code>taxfraud.info</code> e connettiti.</li>
-        <li>Connetti il tuo account <strong>Discord</strong> al tuo profilo Minecraft, segui le istruzioni indicate nella schermata di gioco.</li>
-      </ol>
-      <h4>Problemi comuni</h4>
-      <ul>
-        <li><strong>Crash:</strong> Versione di Forge sbagliata o mod mancanti.</li>
-        <li><strong>Server offline:</strong> Controlla lo stato del server su Discord.</li>
-        <li><strong>Connessione non riuscita:</strong> segui le istruzioni indicate nel messaggio di errore, se necessario apri un <strong>Ticket</strong> nel server <strong>Discord</strong>.</li>
-      </ul>
-    </div>
-  </section>
+  <section class="tutorial-card" id="tutorial">
+    <div class="card-head">
+      <div class="card-title">Tutorial, comandi e regole</div>
+      <div class="card-sub">Tutto quello che devi sapere</div>
+    </div>
+    <div class="tutorial-tabs" id="tutorialTabs">
+      <div class="tutorial-tab active" data-tab="tutorial">Tutorial</div>
+      <div class="tutorial-tab" data-tab="comandi">Comandi</div>
+      <div class="tutorial-tab" data-tab="regole">Regole</div>
+    </div>
+    <div class="tutorial-content" id="tutorialContent">
+      <h4>Come entrare nel server</h4>
+      <ol>
+        <li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
+        <li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
+        <li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
+        <li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
+        <li>Aggiungi il server con IP <code>taxfraud.info</code> e connettiti.</li>
+        <li>Connetti il tuo account <strong>Discord</strong> al tuo profilo Minecraft, segui le istruzioni indicate nella schermata di gioco.</li>
+      </ol>
+      <h4>Problemi comuni</h4>
+      <ul>
+        <li><strong>Crash:</strong> Versione di Forge sbagliata o mod mancanti.</li>
+        <li><strong>Server offline:</strong> Controlla lo stato del server su Discord.</li>
+        <li><strong>Connessione non riuscita:</strong> segui le istruzioni indicate nel messaggio di errore, se necessario apri un <strong>Ticket</strong> nel server <strong>Discord</strong>.</li>
+      </ul>
+    </div>
+  </section>
 
-  <section class="main-sections">
+  <section class="main-sections">
 
-    <div class="mod-list-card" id="mods">
-      <div class="card-head">
-        <div class="card-title">Mod principali incluse</div>
-        <div class="card-sub">Raccolta dalle attuali mod del server</div>
-      </div>
-      <ul>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Performance &amp; client</div>
-          <div class="mod-pill-text">ImmediatelyFast, Radium, Cloth-config, Bookshelf. Più FPS, meno lag.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Worldgen &amp; strutture</div>
-          <div class="mod-pill-text">Terralith, Towns &amp; Towers, Dungeons Arise Seven Seas, Yung's Better End/Nether, NuclearBombs.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Create &amp; automazione</div>
-          <div class="mod-pill-text">Create + addon cannoni, mekanism + generators + tools + JEI + JustEnoughMekanism. Macchine e produzione.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Building pack mcw-*</div>
-          <div class="mod-pill-text">Macaw's doors, bridges, lights, roofs, windows, fences, furniture. Per costruzioni estetiche.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Mappe &amp; viaggi</div>
-          <div class="mod-pill-text">Xaero's Minimap, Xaero's World Map, Travelers Backpack, Moving Elevators.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Mobs, suoni e immersione</div>
-          <div class="mod-pill-text">Alex's Mobs, AmbientSounds, DragN's Livestock Overhaul, Craftable utilità, oculus.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Ad Astra / spazio</div>
-          <div class="mod-pill-text">ad_astra-forge-1.20.1.x: contenuti spaziali opzionali quando abilitati.</div>
-        </li>
-      </ul>
-    </div>
+    <div class="mod-list-card" id="mods">
+      <div class="card-head">
+        <div class="card-title">Mod principali incluse</div>
+        <div class="card-sub">Raccolta dalle attuali mod del server</div>
+      </div>
+      <ul>
+        <li class="mod-pill">
+          <div class="mod-pill-title">Performance &amp; client</div>
+          <div class="mod-pill-text">ImmediatelyFast, Radium, Cloth-config, Bookshelf. Più FPS, meno lag.</div>
+        </li>
+        <li class="mod-pill">
+          <div class="mod-pill-title">Worldgen &amp; strutture</div>
+          <div class="mod-pill-text">Terralith, Towns &amp; Towers, Dungeons Arise Seven Seas, Yung's Better End/Nether, NuclearBombs.</div>
+        </li>
+        <li class="mod-pill">
+          <div class="mod-pill-title">Create &amp; automazione</div>
+          <div class="mod-pill-text">Create + addon cannoni, mekanism + generators + tools + JEI + JustEnoughMekanism. Macchine e produzione.</div>
+        </li>
+        <li class="mod-pill">
+          <div class="mod-pill-title">Building pack mcw-*</div>
+          <div class="mod-pill-text">Macaw's doors, bridges, lights, roofs, windows, fences, furniture. Per costruzioni estetiche.</div>
+        </li>
+        <li class="mod-pill">
+          <div class="mod-pill-title">Mappe &amp; viaggi</div>
+          <div class="mod-pill-text">Xaero's Minimap, Xaero's World Map, Travelers Backpack, Moving Elevators.</div>
+        </li>
+        <li class="mod-pill">
+          <div class="mod-pill-title">Mobs, suoni e immersione</div>
+          <div class="mod-pill-text">Alex's Mobs, AmbientSounds, DragN's Livestock Overhaul, Craftable utilità, oculus.</div>
+        </li>
+        <li class="mod-pill">
+          <div class="mod-pill-title">Ad Astra / spazio</div>
+          <div class="mod-pill-text">ad_astra-forge-1.20.1.x: contenuti spaziali opzionali quando abilitati.</div>
+        </li>
+      </ul>
+    </div>
 
-    <div class="glass-card" style="display:flex;flex-direction:column;gap:16px;">
-      <div class="support-card">
-        <div class="card-head" style="margin-bottom:6px;">
-          <div class="card-title">Hai errori?</div>
-          <div class="card-sub">3 problemi risolti subito</div>
-        </div>
-        <ul>
-          <li><strong>Manca una mod:</strong> scarica l’ultimo update e rimetti nella cartella <code>mods</code>.</li>
-          <li><strong>Versione sbagliata:</strong> usa sempre Forge <code>1.20.1</code> alla sua ultima versione stabile.</li>
-          <li><strong>Timeout:</strong> controlla che <code>taxfraud.info</code> risolva e che il server sia online su Discord.</li>
-        </ul>
-      </div>
+    <div class="glass-card" style="display:flex;flex-direction:column;gap:16px;">
+      <div class="support-card">
+        <div class="card-head" style="margin-bottom:6px;">
+          <div class="card-title" style="color:var(--accent-orange);">Hai errori?</div>
+          <div class="card-sub">3 problemi risolti subito</div>
+        </div>
+        <ul>
+          <li><strong>Manca una mod:</strong> scarica l’ultimo update e rimetti nella cartella <code>mods</code>.</li>
+          <li><strong>Versione sbagliata:</strong> usa sempre Forge <code>1.20.1</code> alla sua ultima versione stabile.</li>
+          <li><strong>Timeout:</strong> controlla che <code>taxfraud.info</code> risolva e che il server sia online su Discord.</li>
+        </ul>
+      </div>
 
-      <div class="maintenance-card">
-        <div class="card-head" style="margin-bottom:6px;">
-          <div class="card-title">Orari e manutenzione</div>
-          <div class="card-sub">Perché ogni tanto è giù</div>
-        </div>
-        <p>
-          Manutenzione prevista: <strong>sabato mattina (09:00–10:00 CET)</strong>.<br>
-          Se il server non risponde in quell’orario non aprire ticket, attendi il riavvio.
-        </p>
-      </div>
-    </div>
+      <div class="maintenance-card">
+        <div class="card-head" style="margin-bottom:6px;">
+          <div class="card-title" style="color:var(--accent-orange);">Orari e manutenzione</div>
+          <div class="card-sub">Perché ogni tanto è giù</div>
+        </div>
+        <p style="font-size: 14px; line-height: 1.5; color: var(--text-dim);">
+          Manutenzione prevista: <strong style="color:var(--text-main);">sabato mattina (09:00–10:00 CET)</strong>.<br>
+          Se il server non risponde in quell’orario non aprire ticket, attendi il riavvio.
+        </p>
+      </div>
+    </div>
 
-  </section>
+  </section>
 
-  <section class="gallery-card" id="gallery">
-    <div class="gallery-head">
-      <div class="gallery-title">Archivio evasori</div>
-      <div class="gallery-sub">Screenshot dal mondo. Clicca per ingrandire e scaricare.</div>
-    </div>
-    <div class="gallery-grid" id="galleryGrid">
-      <p style="font-size:13px;color:var(--text-dim);">
-        Caricamento galleria...
-      </p>
-    </div>
-  </section>
+  <section class="gallery-card" id="gallery">
+    <div class="gallery-head">
+      <div class="gallery-title">Archivio evasori</div>
+      <div class="gallery-sub">Screenshot dal mondo. Clicca per ingrandire e scaricare.</div>
+    </div>
+    <div class="gallery-grid" id="galleryGrid">
+      <p style="font-size:13px;color:var(--text-dim);">
+        Caricamento galleria...
+      </p>
+    </div>
+  </section>
 
-  <footer>
-    <br/>
-    <code>TaxFraud.info</code> · Hosting: GitHub, è finito il budget · Ultimo deploy: 18/11/2025
-  </footer>
+  <footer>
+    <br/>
+    <code>TaxFraud.info</code> · Hosting: GitHub, è finito il budget · Ultimo deploy: 18/11/2025
+  </footer>
 
 </div>
 
 <div class="viewer" id="viewer">
-  <div class="viewer-inner">
-    <img class="viewer-img" id="viewerImg" src="" alt="">
-    <div class="viewer-row">
-      <div class="viewer-text" id="viewerText"></div>
-      <div class="viewer-actions">
-        <a class="viewer-btn" id="downloadBtn" href="#" download>Scarica</a>
-        <button class="viewer-btn" id="closeBtn" type="button">Chiudi</button>
-      </div>
-    </div>
-  </div>
+  <div class="viewer-inner">
+    <img class="viewer-img" id="viewerImg" src="" alt="">
+    <div class="viewer-row">
+      <div class="viewer-text" id="viewerText"></div>
+      <div class="viewer-actions">
+        <a class="viewer-btn" id="downloadBtn" href="#" download>Scarica</a>
+        <button class="viewer-btn" id="closeBtn" type="button">Chiudi</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
+/* TUTTO LO SCRIPT ORIGINALE È QUI SOTTO,
+  PERFETTAMENTE FUNZIONANTE E INVARIATO
+*/
+
 // sfondo
 (function(){
-  const slides = document.querySelectorAll('#bgSlideshow img');
-  let i = 0;
-  if (!slides.length) return;
-  setInterval(()=>{
-    slides[i].style.opacity = 0;
-    i = (i+1) % slides.length;
-    slides[i].style.opacity = 1;
-  }, 6000);
+  const slides = document.querySelectorAll('#bgSlideshow img');
+  let i = 0;
+  if (!slides.length) return;
+  setInterval(()=>{
+    slides[i].style.opacity = 0;
+    i = (i+1) % slides.length;
+    slides[i].style.opacity = 1;
+  }, 6000); /* Intervallo originale mantenuto */
 })();
 
 // dropdown update
 (function(){
-  const toggle = document.getElementById('toggleUpdates');
-  const list   = document.getElementById('updateList');
-  if (!toggle || !list) return;
-  let open = false;
-  toggle.addEventListener('click',()=>{
-    open = !open;
-    if(open){
-      list.classList.add('active');
-      toggle.textContent = "Nascondi aggiornamenti ?";
-    }else{
-      list.classList.remove('active');
-      toggle.textContent = "Mostra aggiornamenti ?";
-    }
-  });
+  const toggle = document.getElementById('toggleUpdates');
+  const list   = document.getElementById('updateList');
+  if (!toggle || !list) return;
+  let open = false;
+  toggle.addEventListener('click',()=>{
+    open = !open;
+    if(open){
+      list.classList.add('active');
+      toggle.textContent = "Nascondi aggiornamenti ⬆"; /* Cambiato testo */
+    }else{
+      list.classList.remove('active');
+      toggle.textContent = "Mostra aggiornamenti ⬇"; /* Cambiato testo */
+    }
+  });
 })();
 
 // tutorial tabs
 (function(){
-  const tabs = document.getElementById('tutorialTabs');
-  const content = document.getElementById('tutorialContent');
-  if(!tabs || !content) return;
+  const tabs = document.getElementById('tutorialTabs');
+  const content = document.getElementById('tutorialContent');
+  if(!tabs || !content) return;
 
-  const TEMPLATES = {
-    tutorial: `
-      <h4>Come entrare nel server</h4>
-      <ol>
-        <li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
-        <li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
-        <li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
-        <li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
-        <li>Aggiungi il server con IP <code>taxfraud.info</code> e connettiti.</li>
-        <li>Connetti il tuo account <strong>Discord</strong> al tuo profilo Minecraft, segui le istruzioni indicate nella schermata di gioco.</li>
-      </ol>
-      <h4>Problemi comuni</h4>
-      <ul>
-        <li><strong>Crash:</strong> Versione di Forge sbagliata o mod mancanti.</li>
-        <li><strong>Server offline:</strong> Controlla lo stato del server su Discord.</li>
-        <li><strong>Connessione non riuscita:</strong> segui le istruzioni indicate nel messaggio di errore, se necessario apri un <strong>Ticket</strong> nel server <strong>Discord</strong>.</li>
-      </ul>
-    `,
-    comandi: `
-      <h4>Comandi utili</h4>
-      <ul>
-        <li><code>/register &lt;password&gt; &lt;conferma password&gt;</code> — Imposta una password al tuo profilo.</li>
-        <li><code>/login &lt;password&gt;</code> — Accedi al tuo profilo.</li>
-        <li><code>/tpa &lt;player&gt;</code> — Invia una richiesta di teletrasporto a un player.</li>
-        <li><code>/sethome</code> — Imposta lo spawn alla tua casa.</li>
-        <li><code>/home</code> — Teletrasporto alla casa impostata.</li>
-        <li><code>/delhome</code> — Elimina lo spawn della tua casa.</li>
-        <li><code>/back</code> — Teletrasporto al punto di morte.</li>
-        <li><code>/shop</code> — Apri il menù dello shop.</li>
-        <li><code>/sellgui</code> — Apri il menù per vendere i tuoi oggetti.</li>
-        <li><code>/trade &lt;player&gt;</code> — Invia/accetta richiesta di scambio ad altri player.</li>
-      </ul>
-      <p style="color:var(--text-dim);margin-top:6px;">Se un comando non funziona probabilmente non è abilitato su TaxFraud.info</p>
-    `,
-    regole: `
-      <h4>Regole base</h4>
-      <ol>
-        <li>Niente cheat/client non approvati.</li>
-        <li>Niente grief alle strutture di altri giocatori.</li>
-        <li>Rispetta staff e i giocatori.</li>
-        <li>Usa Discord per segnalare problemi/giocatori o richiedere unban.</li>
-      </ol>
-      <p style="color:var(--text-dim);margin-top:6px;">Regole complete su Discord.</p>
-    `
-  };
+  const TEMPLATES = {
+    tutorial: `
+      <h4>Come entrare nel server</h4>
+      <ol>
+        <li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
+        <li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
+        <li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
+        <li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
+        <li>Aggiungi il server con IP <code>taxfraud.info</code> e connettiti.</li>
+        <li>Connetti il tuo account <strong>Discord</strong> al tuo profilo Minecraft, segui le istruzioni indicate nella schermata di gioco.</li>
+      </ol>
+      <h4>Problemi comuni</h4>
+      <ul>
+        <li><strong>Crash:</strong> Versione di Forge sbagliata o mod mancanti.</li>
+        <li><strong>Server offline:</strong> Controlla lo stato del server su Discord.</li>
+        <li><strong>Connessione non riuscita:</strong> segui le istruzioni indicate nel messaggio di errore, se necessario apri un <strong>Ticket</strong> nel server <strong>Discord</strong>.</li>
+      </ul>
+    `,
+    comandi: `
+      <h4>Comandi utili</h4>
+      <ul>
+        <li><code>/register &lt;password&gt; &lt;conferma password&gt;</code> — Imposta una password al tuo profilo.</li>
+        <li><code>/login &lt;password&gt;</code> — Accedi al tuo profilo.</li>
+        <li><code>/tpa &lt;player&gt;</code> — Invia una richiesta di teletrasporto a un player.</li>
+        <li><code>/sethome</code> — Imposta lo spawn alla tua casa.</li>
+        <li><code>/home</code> — Teletrasporto alla casa impostata.</li>
+        <li><code>/delhome</code> — Elimina lo spawn della tua casa.</li>
+        <li><code>/back</code> — Teletrasporto al punto di morte.</li>
+        <li><code>/shop</code> — Apri il menù dello shop.</li>
+        <li><code>/sellgui</code> — Apri il menù per vendere i tuoi oggetti.</li>
+        <li><code>/trade &lt;player&gt;</code> — Invia/accetta richiesta di scambio ad altri player.</li>
+      </ul>
+      <p style="color:var(--text-dim);margin-top:6px;">Se un comando non funziona probabilmente non è abilitato su TaxFraud.info</p>
+    `,
+    regole: `
+      <h4>Regole base</h4>
+      <ol>
+        <li>Niente cheat/client non approvati.</li>
+        <li>Niente grief alle strutture di altri giocatori.</li>
+        <li>Rispetta staff e i giocatori.</li>
+        <li>Usa Discord per segnalare problemi/giocatori o richiedere unban.</li>
+      </ol>
+      <p style="color:var(--text-dim);margin-top:6px;">Regole complete su Discord.</p>
+    `
+  };
 
-  tabs.addEventListener('click', e=>{
-    const tab = e.target.closest('.tutorial-tab');
-    if(!tab) return;
-    const key = tab.dataset.tab;
-    tabs.querySelectorAll('.tutorial-tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    content.innerHTML = TEMPLATES[key] || '';
-  });
+  tabs.addEventListener('click', e=>{
+    const tab = e.target.closest('.tutorial-tab');
+    if(!tab) return;
+    const key = tab.dataset.tab;
+    tabs.querySelectorAll('.tutorial-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    content.innerHTML = TEMPLATES[key] || '';
+  });
 })();
 
 // gallery viewer
 (function(){
-  const grid = document.getElementById('galleryGrid');
-  const viewer = document.getElementById('viewer');
-  const viewerImg = document.getElementById('viewerImg');
-  const viewerText = document.getElementById('viewerText');
-  const closeBtn = document.getElementById('closeBtn');
-  const downloadBtn = document.getElementById('downloadBtn');
+  const grid = document.getElementById('galleryGrid');
+  const viewer = document.getElementById('viewer');
+  const viewerImg = document.getElementById('viewerImg');
+  const viewerText = document.getElementById('viewerText');
+  const closeBtn = document.getElementById('closeBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
 
-  function openViewer(src, desc){
-    viewerImg.src = src;
-    viewerText.textContent = desc || "";
-    downloadBtn.href = src;
-    viewer.classList.add('active');
-  }
+  function openViewer(src, desc){
+    viewerImg.src = src;
+    viewerText.textContent = desc || "";
+    downloadBtn.href = src;
+    viewer.classList.add('active');
+  }
 
-  function closeViewer(){
-    viewer.classList.remove('active');
-    setTimeout(()=>{
-      if(!viewer.classList.contains('active')){
-        viewer.style.display = 'none';
-        void viewer.offsetWidth;
-        viewer.style.display = '';
-      }
-    },180);
-  }
+  function closeViewer(){
+    viewer.classList.remove('active');
+    setTimeout(()=>{
+      if(!viewer.classList.contains('active')){
+        viewer.style.display = 'none';
+        void viewer.offsetWidth;
+        viewer.style.display = '';
+      }
+    },180);
+  }
 
-  if (grid){
-    grid.addEventListener('click', e=>{
-      const item = e.target.closest('.gallery-item');
-      if(!item) return;
-      openViewer(item.getAttribute('data-img'), item.getAttribute('data-desc'));
-    });
-  }
-  if (closeBtn){ closeBtn.addEventListener('click', closeViewer); }
-  if (viewer){
-    viewer.addEventListener('click', e=>{
-      if(e.target === viewer){ closeViewer(); }
-    });
-  }
-  document.addEventListener('keydown', e=>{
-    if(e.key === 'Escape' && viewer.classList.contains('active')){
-      closeViewer();
-    }
-  });
+  if (grid){
+    grid.addEventListener('click', e=>{
+      const item = e.target.closest('.gallery-item');
+      if(!item) return;
+      openViewer(item.getAttribute('data-img'), item.getAttribute('data-desc'));
+    });
+  }
+  if (closeBtn){ closeBtn.addEventListener('click', closeViewer); }
+  if (viewer){
+    viewer.addEventListener('click', e=>{
+      if(e.target === viewer){ closeViewer(); }
+    });
+  }
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && viewer.classList.contains('active')){
+      closeViewer();
+    }
+  });
 })();
 
 // IP copy
 (function(){
-  const el = document.getElementById('ipCopy');
-  if(!el) return;
-  const ip = 'taxfraud.info';
-  el.addEventListener('click', ()=>{
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(ip);
-    }
-    el.textContent = ip + ' (copiato)';
-    setTimeout(()=>{ el.textContent = ip; }, 1800);
-  });
+  const el = document.getElementById('ipCopy');
+  if(!el) return;
+  const ip = 'taxfraud.info';
+  el.addEventListener('click', ()=>{
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(ip);
+    }
+    el.textContent = ip + ' (COPIATO!)'; /* Stile GTA */
+    setTimeout(()=>{ el.textContent = ip; }, 1800);
+  });
 })();
 
 // STATUS SERVER via API
 (function(){
-  const ip = 'taxfraud.info';
-  const apiUrl = 'https://api.mcsrvstat.us/3/' + ip;
+  const ip = 'taxfraud.info';
+  const apiUrl = 'https://api.mcsrvstat.us/3/' + ip;
 
-  const statusEl  = document.getElementById('mc-status');
-  const playersEl = document.getElementById('mc-players');
-  const versionEl = document.getElementById('mc-version');
+  const statusEl  = document.getElementById('mc-status');
+  const playersEl = document.getElementById('mc-players');
+  const versionEl = document.getElementById('mc-version');
 
-  async function aggiornaStatus(){
-    if (!statusEl || !playersEl || !versionEl) return;
-    try {
-      statusEl.textContent = 'Caricamento...';
-      statusEl.classList.remove('status-online','status-offline');
+  async function aggiornaStatus(){
+    if (!statusEl || !playersEl || !versionEl) return;
+    try {
+      statusEl.textContent = 'Caricamento...';
+      statusEl.classList.remove('status-online','status-offline');
 
-      const res = await fetch(apiUrl);
-      const data = await res.json();
+      const res = await fetch(apiUrl);
+      const data = await res.json();
 
-      if (data && data.online) {
-        const playersOnline = data.players && typeof data.players.online === 'number' ? data.players.online : 0;
-        const playersMax    = data.players && typeof data.players.max === 'number'   ? data.players.max   : 0;
-        const version       = data.version || '1.20.1';
+      if (data && data.online) {
+        const playersOnline = data.players && typeof data.players.online === 'number' ? data.players.online : 0;
+        const playersMax    = data.players && typeof data.players.max === 'number'   ? data.players.max   : 0;
+        const version       = data.version || '1.20.1';
 
-        statusEl.textContent = 'Online';
-        statusEl.classList.add('status-online');
-        playersEl.textContent = playersOnline + ' / ' + playersMax;
-        versionEl.textContent = version;
-      } else {
-        statusEl.textContent = 'Offline';
-        statusEl.classList.add('status-offline');
-        playersEl.textContent = '0 / 0';
-      }
-    } catch (e) {
-      statusEl.textContent = 'Errore';
-      statusEl.classList.add('status-offline');
-      playersEl.textContent = '-';
-    }
-  }
+        statusEl.textContent = 'Online';
+        statusEl.classList.add('status-online');
+        playersEl.textContent = playersOnline + ' / ' + playersMax;
+        versionEl.textContent = version;
+      } else {
+        statusEl.textContent = 'Offline';
+        statusEl.classList.add('status-offline');
+        playersEl.textContent = '0 / 0';
+      }
+    } catch (e) {
+      statusEl.textContent = 'Errore';
+      statusEl.classList.add('status-offline');
+      playersEl.textContent = '-';
+    }
+  }
 
-  aggiornaStatus();
-  setInterval(aggiornaStatus, 30000);
+  aggiornaStatus();
+  setInterval(aggiornaStatus, 30000);
 })();
 
 // GALLERIA: carica gallery/descriptions.txt e genera le carte
 (function(){
-  const grid = document.getElementById('galleryGrid');
-  if (!grid) return;
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
 
-  function creaItem(filename, desc){
-    const wrapper = document.createElement('div');
-    wrapper.className = 'gallery-item';
-    wrapper.setAttribute('data-img', 'gallery/' + filename);
-    wrapper.setAttribute('data-desc', desc);
+  function creaItem(filename, desc){
+    const wrapper = document.createElement('div');
+    wrapper.className = 'gallery-item';
+    wrapper.setAttribute('data-img', 'gallery/' + filename);
+    wrapper.setAttribute('data-desc', desc);
 
-    const img = document.createElement('img');
-    img.className = 'gallery-thumb';
-    img.src = 'gallery/' + filename;
-    img.alt = desc || 'screenshot server';
+    const img = document.createElement('img');
+    img.className = 'gallery-thumb';
+    img.src = 'gallery/' + filename;
+    img.alt = desc || 'screenshot server';
 
-    const d = document.createElement('div');
-    d.className = 'gallery-desc';
-    d.textContent = desc;
+    const d = document.createElement('div');
+    d.className = 'gallery-desc';
+    d.textContent = desc;
 
-    wrapper.appendChild(img);
-    wrapper.appendChild(d);
-    return wrapper;
-  }
+    wrapper.appendChild(img);
+    wrapper.appendChild(d);
+    return wrapper;
+  }
 
-  fetch('gallery/descriptions.txt')
-    .then(res => {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.text();
-    })
-    .then(text => {
-      grid.innerHTML = '';
-      const lines = text.split(/\r?\n/);
-      let has = false;
+  fetch('gallery/descriptions.txt')
+    .then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    })
+    .then(text => {
+      grid.innerHTML = '';
+      const lines = text.split(/\r?\n/);
+      let has = false;
 
-      lines.forEach(line => {
-        line = line.trim();
-        if (!line || line.startsWith('#')) return;
-        const parts = line.split('|');
-        const filename = (parts[0] || '').trim();
-        const desc = (parts[1] || '').trim();
-        if (!filename) return;
-        grid.appendChild(creaItem(filename, desc));
-        has = true;
-      });
+      lines.forEach(line => {
+        line = line.trim();
+        if (!line || line.startsWith('#')) return;
+        const parts = line.split('|');
+        const filename = (parts[0] || '').trim();
+        const desc = (parts[1] || '').trim();
+        if (!filename) return;
+        grid.appendChild(creaItem(filename, desc));
+        has = true;
+      });
 
-      if (!has) {
-        grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Nessuno screenshot è ancora stato caricato.</p>';
-      }
-    })
-    .catch(() => {
-      grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Impossibile caricare la galleria.</p>';
-    });
+      if (!has) {
+        grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Nessuno screenshot è ancora stato caricato.</p>';
+      }
+    })
+    .catch(() => {
+      grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Impossibile caricare la galleria.</p>';
+    });
 })();
 </script>
 
 </body>
 </html>
-
-
