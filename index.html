@@ -402,6 +402,7 @@
     font-size: 20px;
     font-weight: 700;
     text-transform: uppercase;
+section.
     letter-spacing: 0.05em;
     color: var(--accent-cyan);
   }
@@ -452,6 +453,7 @@
     transition:transform .18s ease;
   }
   .viewer.active .viewer-inner{transform:scale(var(--viewer-open-scale));}
+all.
   .viewer-img{
     max-width:90vw;max-height:70vh;
     object-fit:contain;
@@ -467,6 +469,7 @@
   /* Bottoni nel viewer */
   .viewer-btn{
     display:inline-block;text-decoration:none;text-align:center;
+all.
     font-family: var(--font-heading);
     font-weight:700;
     font-size:14px;
@@ -481,6 +484,7 @@
     border: 2px solid var(--accent-pink);
     border-radius: var(--radius-sm);
     backdrop-filter: none;
+all.
     box-shadow: none;
     cursor:pointer;
     transition:all .15s ease;
@@ -489,7 +493,7 @@
     transform:scale(var(--btn-hover-scale));
     box-shadow: 0 0 15px var(--accent-pink);
     background: var(--accent-pink);
-    color: var(--text-dark);
+  	color: var(--text-dark);
   }
   .viewer-btn:active{
     transform:scale(var(--btn-press-scale));
@@ -511,6 +515,7 @@
     text-align:center;
     color:var(--text-dim);
     font-size:12px;
+  s.
     line-height:1.4;
     font-family: var(--font-mono);
     text-transform: uppercase;
@@ -520,10 +525,10 @@
     font-family: var(--font-mono);
     font-size:12px;
     color:var(--accent-orange);
-    background: #111;
-    border:1px solid #333;
-    border-radius:var(--radius-sm);
-    padding:2px 6px;
+  	background: #111;
+  	border:1px solid #333;
+  	border-radius:var(--radius-sm);
+  	padding:2px 6px;
   }
   
   /* Responsive (già presente, lo teniamo) */
@@ -532,7 +537,7 @@
     .viewer-img{max-height:80vh;}
     .viewer-row{flex-direction:column;align-items:stretch;}
     .viewer-actions{width:100%;justify-content:space-between;}
-    .viewer-btn{flex:1 1 auto;text-align:center;}
+  	.viewer-btn{flex:1 1 auto;text-align:center;}
   }
   </style>
 </head>
@@ -557,231 +562,226 @@
 <div class="page">
 
   <section class="header-box" id="top">
-    <div class="server-name">TaxFraud</div>
-    <div class="server-desc">
-      Creato dagli evasori, per gli evasori.
-    </div>
-    <div class="status-grid">
-      <div class="status-card">
-        <div class="status-label">Stato server</div>
-        <div class="status-value status-offline" id="mc-status">
-          Caricamento...
-        </div>
-      </div>
-      <div class="status-card">
-        <div class="status-label">Versione</div>
-        <div class="status-value" id="mc-version">1.20.1</div>
-      </div>
-      <div class="status-card">
-        <div class="status-label">Giocatori</div>
-        <div class="status-value" id="mc-players">-</div>
-      </div>
-    </div>
+  	<div class="server-name">TaxFraud</div>
+  	<div class="server-desc">
+  	  Creato dagli evasori, per gli evasori.
+  	</div>
+  	<div class="status-grid">
+  	  <div class="status-card">
+  	  	<div class="status-label">Stato server</div>
+  	  	<div class="status-value status-offline" id="mc-status">
+  	  	  Caricamento...
+  	  	</div>
+  	  </div>
+  	  <div class="status-card">
+  	  	<div class="status-label">Versione</div>
+  	  	<div class="status-value" id="mc-version">1.20.1</div>
+  	  </div>
+  	  <div class="status-card">
+  	  	<div class="status-label">Giocatori</div>
+  	  	<div class="status-value" id="mc-players">-</div>
+  	  </div>
+  	</div>
   </section>
 
   <section class="main-sections">
 
-    <div class="glass-card" id="info">
-      <div class="card-head">
-        <div class="card-title">Info server Minecraft</div>
-        <div class="card-sub">Connessione e community</div>
-      </div>
-      <div class="info-block">
-        <div class="info-row">
-          <div class="info-label">IP del server (clicca per copiare)</div>
-          <div class="info-value" id="ipCopy" style="cursor:pointer;">taxfraud.info</div>
-        </div>
-        <div class="info-row">
-          <div class="info-label">Discord</div>
-          <div class="info-value">
-            <a href="https://discord.gg/CQxwmRdGsr" target="_blank" rel="noopener">
-              https://discord.gg/CQxwmRdGsr
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+  	<div class="glass-card" id="info">
+  	  <div class="card-head">
+  	  	<div class="card-title">Info server Minecraft</div>
+  	  	<div class="card-sub">Connessione e community</div>
+  	  </div>
+  	  <div class="info-block">
+  	  	<div class="info-row">
+  	  	  <div class="info-label">IP del server (clicca per copiare)</div>
+  	  	  <div class="info-value" id="ipCopy" style="cursor:pointer;">taxfraud.info</div>
+  	  	</div>
+  	  	<div class="info-row">
+  	  	  <div class="info-label">Discord</div>
+  	  	  <div class="info-value">
+  	  	  	<a href="https://discord.gg/CQxwmRdGsr" target="_blank" rel="noopener">
+  	  	  	  https://discord.gg/CQxwmRdGsr
+  	  	  	</a>
+  	  	  </div>
+  	  	</div>
+  	  </div>
+  	</div>
 
-    <div class="glass-card" id="download">
-      <div class="card-head">
-        <div class="card-title">Materiale illecito</div>
-        <div class="card-sub">Modpack e Update</div>
-      </div>
-      <div class="download-box">
-        <div class="dl-item">
-          <div class="dl-top">
-            <div class="dl-name">Pacchetto completo</div>
-            <div class="dl-desc">Tutte le mod richieste dal server. Scarica questo se entri per la prima volta o se vuoi reinstallare da zero le mod.</div>
-          </div>
-                    <a class="btn-download"
-             href="https://drive.google.com/file/d/1KO3W1aJjDgWGU9JPjoOO2bNlorzd_1qo/view?usp=sharing"
-             target="_blank"
-             rel="noopener">
-            Scarica Pacchetto completo
-          </a>
-        </div>
-        <div class="dl-item">
-          <div class="dl-top">
-            <div class="dl-name">Update recenti</div>
-            <div class="dl-desc">
-              Se hai gia scaricato il pacchetto completo in precedenza, ora ti basta scaricare solo i pacchetti update contenenti le ultime mod aggiunte.
-              <br><strong style="color:var(--text-main);">Ultimo update:</strong> 18/11/2025
-            </div>
-          </div>
-          <div class="update-wrapper">
-            <div class="btn-download btn-secondary update-toggle" id="toggleUpdates">
-              Mostra aggiornamenti ⬇
-            </div>
-            <div class="update-list" id="updateList">
-              <div class="update-row">
-                <div class="update-row-label">Update 1</div>
-                <div class="update-row-desc">
-                  Questo update aggiunge le ultime mod necessarie per poter accedere al server e goderti al pieno l'esperienza di TaxFraud.
-                </div>
-                                <a class="btn-download btn-secondary"
-                   href="https://drive.google.com/file/d/1FT98F1Dv2kCn9g8MEb2gYKH1waixJepE/view?usp=sharing"
-                   target="_blank"
-                   rel="noopener">
-                  Scarica Update 1
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  	<div class="glass-card" id="download">
+  	  <div class="card-head">
+  	  	<div class="card-title">Materiale illecito</div>
+  	  	<div class="card-sub">Modpack e Update</div>
+  	  </div>
+  	  <div class="download-box">
+  	  	<div class="dl-item">
+  	  	  <div class="dl-top">
+  	  	  	<div class="dl-name">Pacchetto completo</div>
+  	  	  	<div class="dl-desc">Tutte le mod richieste dal server. Scarica questo se entri per la prima volta o se vuoi reinstallare da zero le mod.</div>
+  	  	  </div>
+  	  	    	  	  <a class="btn-download"
+  	  	  	 href="https://drive.google.com/file/d/1KO3W1aJjDgWGU9JPjoOO2bNlorzd_1qo/view?usp=sharing"
+  	  	  	 target="_blank"
+  	  	  	 rel="noopener">
+  	  	  	Scarica Pacchetto completo
+  	  	  </a>
+  	  	</div>
+  	  	<div class="dl-item">
+  	  	  <div class="dl-top">
+  	  	  	<div class="dl-name">Update recenti</div>
+  	  	  	<div class="dl-desc">
+  	  	  	  Se hai gia scaricato il pacchetto completo in precedenza, ora ti basta scaricare solo i pacchetti update contenenti le ultime mod aggiunte.
+  	  	  	  <br><strong style="color:var(--text-main);">Ultimo update:</strong> 18/11/2025
+  	  	  	</div>
+  	  	  </div>
+  	  	  <div class="update-wrapper">
+  	  	  	<div class="btn-download btn-secondary update-toggle" id="toggleUpdates">
+  	  	  	  Mostra aggiornamenti ⬇
+  	  	  	</div>
+  	  	  	<div class="update-list" id="updateList">
+  	  	  	  <div class="update-row">
+  	  	  	  	<div class="update-row-label">Update 1</div>
+  	  	  	  	<div class="update-row-desc">
+  	  	  	  	  Questo update aggiunge le ultime mod necessarie per poter accedere al server e goderti al pieno l'esperienza di TaxFraud.
+  	  	  	  	</div>
+  	  	  	  	  	  	  	  	<a class="btn-download btn-secondary"
+  	  	  	  	   href="https://drive.google.com/file/d/1FT98F1Dv2kCn9g8MEb2gYKH1waixJepE/view?usp=sharing"
+  	  	  	  	   target="_blank"
+  	  	  	  	   rel="noopener">
+  	  	  	  	  Scarica Update 1
+  	  	  	  	</a>
+  	  	  	  </div>
+  	  	  	</div>
+  	  	  </div>
+  	  	</div>
+  	  </div>
+  	</div>
 
   </section>
 
-NT.
   <section class="tutorial-card" id="tutorial">
-    <div class="card-head">
-      <div class="card-title">Tutorial, comandi e regole</div>
-      <div class="card-sub">Tutto quello che devi sapere</div>
-    </div>
-    <div class="tutorial-tabs" id="tutorialTabs">
-      <div class="tutorial-tab active" data-tab="tutorial">Tutorial</div>
-      <div class="tutorial-tab" data-tab="comandi">Comandi</div>
-      <div class="tutorial-tab" data-tab="regole">Regole</div>
-    </div>
-    <div class="tutorial-content" id="tutorialContent">
-      <h4>Come entrare nel server</h4>
-      <ol>
-        <li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
-        <li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
-        <li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
-        <li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
-        <li>Aggiungi il server con IP <code>taxfraud.info</code> e connettiti.</li>
-        <li>Connetti il tuo account <strong>Discord</strong> al tuo profilo Minecraft, segui le istruzioni indicate nella schermata di gioco.</li>
-      </ol>
-      <h4>Problemi comuni</h4>
-      <ul>
-        <li><strong>Crash:</strong> Versione di Forge sbagliata o mod mancanti.</li>
-        <li><strong>Server offline:</strong> Controlla lo stato del server su Discord.</li>
-        <li><strong>Connessione non riuscita:</strong> segui le istruzioni indicate nel messaggio di errore, se necessario apri un <strong>Ticket</strong> nel server <strong>Discord</strong>.</li>
-      </ul>
-    </div>
+  	<div class="card-head">
+  	  <div class="card-title">Tutorial, comandi e regole</div>
+  	  <div class="card-sub">Tutto quello che devi sapere</div>
+  	</div>
+  	<div class="tutorial-tabs" id="tutorialTabs">
+  	  <div class="tutorial-tab active" data-tab="tutorial">Tutorial</div>
+  	  <div class="tutorial-tab" data-tab="comandi">Comandi</div>
+  	  <div class="tutorial-tab" data-tab="regole">Regole</div>
+  	</div>
+  	<div class="tutorial-content" id="tutorialContent">
+  	  <h4>Come entrare nel server</h4>
+  	  <ol>
+  	  	<li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
+  	  	<li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
+  	  	<li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
+  	  	<li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
+  	  	<li>Aggiungi il server con IP <code>taxfraud.info</code> e connettiti.</li>
+  	  	<li>Connetti il tuo account <strong>Discord</strong> al tuo profilo Minecraft, segui le istruzioni indicate nella schermata di gioco.</li>
+  	  </ol>
+  	  <h4>Problemi comuni</h4>
+  	  <ul>
+  	  	<li><strong>Crash:</strong> Versione di Forge sbagliata o mod mancanti.</li>
+  	  	<li><strong>Server offline:</strong> Controlla lo stato del server su Discord.</li>
+  	  	<li><strong>Connessione non riuscita:</strong> segui le istruzioni indicate nel messaggio di errore, se necessario apri un <strong>Ticket</strong> nel server <strong>Discord</strong>.</li>
+  	  </ul>
+  	</div>
   </section>
 
   <section class="main-sections">
 
-    <div class="mod-list-card" id="mods">
-      <div class="card-head">
-        <div class="card-title">Mod principali incluse</div>
-        <div class="card-sub">Raccolta dalle attuali mod del server</div>
-      </div>
-      <ul>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Performance &amp; client</div>
-          <div class="mod-pill-text">ImmediatelyFast, Radium, Cloth-config, Bookshelf. Più FPS, meno lag.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Worldgen &amp; strutture</div>
-          <div class="mod-pill-text">Terralith, Towns &amp; Towers, Dungeons Arise Seven Seas, Yung's Better End/Nether, NuclearBombs.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Create &amp; automazione</div>
-          <div class="mod-pill-text">Create + addon cannoni, mekanism + generators + tools + JEI + JustEnoughMekanism. Macchine e produzione.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Building pack mcw-*</div>
-          <div class="mod-pill-text">Macaw's doors, bridges, lights, roofs, windows, fences, furniture. Per costruzioni estetiche.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Mappe &amp; viaggi</div>
-          <div class="mod-pill-text">Xaero's Minimap, Xaero's World Map, Travelers Backpack, Moving Elevators.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Mobs, suoni e immersione</div>
-NT.
-          <div class="mod-pill-text">Alex's Mobs, AmbientSounds, DragN's Livestock Overhaul, Craftable utilità, oculus.</div>
-        </li>
-        <li class="mod-pill">
-          <div class="mod-pill-title">Ad Astra / spazio</div>
-          <div class="mod-pill-text">ad_astra-forge-1.20.1.x: contenuti spaziali opzionali quando abilitati.</div>
-        </li>
-      </ul>
-    </div>
+  	<div class="mod-list-card" id="mods">
+  	  <div class="card-head">
+  	  	<div class="card-title">Mod principali incluse</div>
+  	  	<div class="card-sub">Raccolta dalle attuali mod del server</div>
+  	  </div>
+  	  <ul>
+  	  	<li class="mod-pill">
+  	  	  <div class="mod-pill-title">Performance &amp; client</div>
+  	  	  <div class="mod-pill-text">ImmediatelyFast, Radium, Cloth-config, Bookshelf. Più FPS, meno lag.</div>
+  	  	</li>
+  	  	<li class="mod-pill">
+  	  	  <div class="mod-pill-title">Worldgen &amp; strutture</div>
+  	  	  <div class="mod-pill-text">Terralith, Towns &amp; Towers, Dungeons Arise Seven Seas, Yung's Better End/Nether, NuclearBombs.</div>
+  	  	</li>
+  	  	<li class="mod-pill">
+  	  	  <div class="mod-pill-title">Create &amp; automazione</div>
+  	  	  <div class="mod-pill-text">Create + addon cannoni, mekanism + generators + tools + JEI + JustEnoughMekanism. Macchine e produzione.</div>
+  	  	</li>
+  	  	<li class="mod-pill">
+  	  	  <div class="mod-pill-title">Building pack mcw-*</div>
+  	  	  <div class="mod-pill-text">Macaw's doors, bridges, lights, roofs, windows, fences, furniture. Per costruzioni estetiche.</div>
+  	  	</li>
+  	  	<li class="mod-pill">
+  	  	  <div class="mod-pill-title">Mappe &amp; viaggi</div>
+  	  	  <div class="mod-pill-text">Xaero's Minimap, Xaero's World Map, Travelers Backpack, Moving Elevators.</div>
+  	  	</li>
+  	  	<li class="mod-pill">
+  	  	  <div class="mod-pill-title">Mobs, suoni e immersione</div>
+  	  	  <div class="mod-pill-text">Alex's Mobs, AmbientSounds, DragN's Livestock Overhaul, Craftable utilità, oculus.</div>
+  	  	</li>
+  	  	<li class="mod-pill">
+  	  	  <div class="mod-pill-title">Ad Astra / spazio</div>
+  	  	  <div class="mod-pill-text">ad_astra-forge-1.20.1.x: contenuti spaziali opzionali quando abilitati.</div>
+  	  	</li>
+  	  </ul>
+  	</div>
 
-    <div class="glass-card" style="display:flex;flex-direction:column;gap:16px;">
-      <div class="support-card">
-        <div class="card-head" style="margin-bottom:6px;">
-          <div class="card-title" style="color:var(--accent-orange);">Hai errori?</div>
-section.
-          <div class="card-sub">3 problemi risolti subito</div>
-        </div>
-        <ul>
-          <li><strong>Manca una mod:</strong> scarica l’ultimo update e rimetti nella cartella <code>mods</code>.</li>
-          <li><strong>Versione sbagliata:</strong> usa sempre Forge <code>1.20.1</code> alla sua ultima versione stabile.</li>
-          <li><strong>Timeout:</strong> controlla che <code>taxfraud.info</code> risolva e che il server sia online su Discord.</li>
-        </ul>
-      </div>
+  	<div class="glass-card" style="display:flex;flex-direction:column;gap:16px;">
+  	  <div class="support-card">
+  	  	<div class="card-head" style="margin-bottom:6px;">
+  	  	  <div class="card-title" style="color:var(--accent-orange);">Hai errori?</div>
+  	  	  <div class="card-sub">3 problemi risolti subito</div>
+  	  	</div>
+  	  	<ul>
+  	  	  <li><strong>Manca una mod:</strong> scarica l’ultimo update e rimetti nella cartella <code>mods</code>.</li>
+  	  	  <li><strong>Versione sbagliata:</strong> usa sempre Forge <code>1.20.1</code> alla sua ultima versione stabile.</li>
+  	  	  <li><strong>Timeout:</strong> controlla che <code>taxfraud.info</code> risolva e che il server sia online su Discord.</li>
+  	  	</ul>
+  	  </div>
 
-      <div class="maintenance-card">
-        <div class="card-head" style="margin-bottom:6px;">
-section.
-          <div class="card-title" style="color:var(--accent-orange);">Orari e manutenzione</div>
-          <div class="card-sub">Perché ogni tanto è giù</div>
-        </div>
-        <p style="font-size: 14px; line-height: 1.5; color: var(--text-dim);">
-          Manutenzione prevista: <strong style="color:var(--text-main);">sabato mattina (09:00–10:00 CET)</strong>.<br>
-          Se il server non risponde in quell’orario non aprire ticket, attendi il riavvio.
-        </p>
-      </div>
-    </div>
+  	  <div class="maintenance-card">
+  	  	<div class="card-head" style="margin-bottom:6px;">
+  	  	  <div class="card-title" style="color:var(--accent-orange);">Orari e manutenzione</div>
+  	  	  <div class="card-sub">Perché ogni tanto è giù</div>
+  	  	</div>
+  	  	<p style="font-size: 14px; line-height: 1.5; color: var(--text-dim);">
+  	  	  Manutenzione prevista: <strong style="color:var(--text-main);">sabato mattina (09:00–10:00 CET)</strong>.<br>
+  	  	  Se il server non risponde in quell’orario non aprire ticket, attendi il riavvio.
+  	  	</p>
+  	  </div>
+  	</div>
 
   </section>
 
   <section class="gallery-card" id="gallery">
-    <div class="gallery-head">
-      <div class="gallery-title">Archivio evasori</div>
-      <div class="gallery-sub">Screenshot dal mondo. Clicca per ingrandire e scaricare.</div>
-A.
-    </div>
-    <div class="gallery-grid" id="galleryGrid">
-      <p style="font-size:13px;color:var(--text-dim);">
-        Caricamento galleria...
-      </p>
-    </div>
+  	<div class="gallery-head">
+  	  <div class="gallery-title">Archivio evasori</div>
+  	  <div class="gallery-sub">Screenshot dal mondo. Clicca per ingrandire e scaricare.</div>
+  	</div>
+  	<div class="gallery-grid" id="galleryGrid">
+  	  <p style="font-size:13px;color:var(--text-dim);">
+  	  	Caricamento galleria...
+  	  </p>
+  	</div>
   </section>
 
   <footer>
-    <br/>
-    <code>TaxFraud.info</code> · Hosting: GitHub, è finito il budget · Ultimo deploy: 18/11/2025
+  	<br/>
+  	<code>TaxFraud.info</code> · Hosting: GitHub, è finito il budget · Ultimo deploy: 18/11/2025
   </footer>
 
 </div>
 
 <div class="viewer" id="viewer">
   <div class="viewer-inner">
-    <img class="viewer-img" id="viewerImg" src="" alt="">
-    <div class="viewer-row">
-      <div class="viewer-text" id="viewerText"></div>
-      <div class="viewer-actions">
-        <a class="viewer-btn" id="downloadBtn" href="#" download>Scarica</a>
-        <button class="viewer-btn" id="closeBtn" type="button">Chiudi</button>
-      </div>
-    </div>
+  	<img class="viewer-img" id="viewerImg" src="" alt="">
+  	<div class="viewer-row">
+  	  <div class="viewer-text" id="viewerText"></div>
+  	  <div class="viewer-actions">
+  	  	<a class="viewer-btn" id="downloadBtn" href="#" download>Scarica</a>
+  	  	<button class="viewer-btn" id="closeBtn" type="button">Chiudi</button>
+  	  </div>
+  	</div>
   </div>
 </div>
 
@@ -796,9 +796,9 @@ A.
   let i = 0;
   if (!slides.length) return;
   setInterval(()=>{
-    slides[i].style.opacity = 0;
-    i = (i+1) % slides.length;
-    slides[i].style.opacity = 1;
+  	slides[i].style.opacity = 0;
+  	i = (i+1) % slides.length;
+  	slides[i].style.opacity = 1;
   }, 6000); /* Intervallo originale mantenuto */
 })();
 
@@ -809,14 +809,14 @@ A.
   if (!toggle || !list) return;
   let open = false;
   toggle.addEventListener('click',()=>{
-    open = !open;
-    if(open){
-      list.classList.add('active');
-      toggle.textContent = "Nascondi aggiornamenti ⬆"; /* Cambiato testo */
-    }else{
-      list.classList.remove('active');
-      toggle.textContent = "Mostra aggiornamenti ⬇"; /* Cambiato testo */
-    }
+  	open = !open;
+  	if(open){
+  	  list.classList.add('active');
+  	  toggle.textContent = "Nascondi aggiornamenti ⬆"; /* Cambiato testo */
+  	}else{
+  	  list.classList.remove('active');
+  	  toggle.textContent = "Mostra aggiornamenti ⬇"; /* Cambiato testo */
+  	}
   });
 })();
 
@@ -827,62 +827,58 @@ A.
   if(!tabs || !content) return;
 
   const TEMPLATES = {
-    tutorial: `
-      <h4>Come entrare nel server</h4>
-      <ol>
-        <li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
-section.
-        <li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
-        <li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
-        <li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
-        <li>Aggiungi il server con IP <code>taxfraud.info</code> e connettiti.</li>
-        <li>Connetti il tuo account <strong>Discord</strong> al tuo profilo Minecraft, segui le istruzioni indicate nella schermata di gioco.</li>
-      </ol>
-      <h4>Problemi comuni</h4>
-      <ul>
-        <li><strong>Crash:</strong> Versione di Forge sbagliata o mod mancanti.</li>
-        <li><strong>Server offline:</strong> Controlla lo stato del server su Discord.</li>
-        <li><strong>Connessione non riuscita:</strong> segui le istruzioni indicate nel messaggio di errore, se necessario apri un <strong>Ticket</strong> nel server <strong>Discord</strong>.</li>
-      </ul>
-    `,
-    comandi: `
-      <h4>Comandi utili</h4>
-      <ul>
-        <li><code>/register &lt;password&gt; &lt;conferma password&gt;</code> — Imposta una password al tuo profilo.</li>
-section.
-        <li><code>/login &lt;password&gt;</code> — Accedi al tuo profilo.</li>
-        <li><code>/tpa &lt;player&gt;</code> — Invia una richiesta di teletrasporto a un player.</li>
-        <li><code>/sethome</code> — Imposta lo spawn alla tua casa.</li>
-        <li><code>/home</code> — Teletrasporto alla casa impostata.</li>
-        <li><code>/delhome</code> — Elimina lo spawn della tua casa.</li>
-CON.
-        <li><code>/back</code> — Teletrasporto al punto di morte.</li>
-        <li><code>/shop</code> — Apri il menù dello shop.</li>
-        <li><code>/sellgui</code> — Apri il menù per vendere i tuoi oggetti.</li>
-        <li><code>/trade &lt;player&gt;</code> — Invia/accetta richiesta di scambio ad altri player.</li>
-      </ul>
-      <p style="color:var(--text-dim);margin-top:6px;">Se un comando non funziona probabilmente non è abilitato su TaxFraud.info</p>
-    `,
-    regole: `
-      <h4>Regole base</h4>
-      <ol>
-        <li>Niente cheat/client non approvati.</li>
-ar.
-        <li>Niente grief alle strutture di altri giocatori.</li>
-        <li>Rispetta staff e i giocatori.</li>
-        <li>Usa Discord per segnalare problemi/giocatori o richiedere unban.</li>
-      </ol>
-      <p style="color:var(--text-dim);margin-top:6px;">Regole complete su Discord.</p>
-    `
+  	tutorial: `
+  	  <h4>Come entrare nel server</h4>
+  	  <ol>
+  	  	<li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
+  	  	<li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
+  	  	<li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
+  	  	<li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
+  	  	<li>Aggiungi il server con IP <code>taxfraud.info</code> e connettiti.</li>
+  	  	<li>Connetti il tuo account <strong>Discord</strong> al tuo profilo Minecraft, segui le istruzioni indicate nella schermata di gioco.</li>
+  	  </ol>
+  	  <h4>Problemi comuni</h4>
+  	  <ul>
+  	  	<li><strong>Crash:</strong> Versione di Forge sbagliata o mod mancanti.</li>
+  	  	<li><strong>Server offline:</strong> Controlla lo stato del server su Discord.</li>
+  	  	<li><strong>Connessione non riuscita:</strong> segui le istruzioni indicate nel messaggio di errore, se necessario apri un <strong>Ticket</strong> nel server <strong>Discord</strong>.</li>
+  	  </ul>
+  	`,
+  	comandi: `
+  	  <h4>Comandi utili</h4>
+  	  <ul>
+  	  	<li><code>/register &lt;password&gt; &lt;conferma password&gt;</code> — Imposta una password al tuo profilo.</li>
+  	  	<li><code>/login &lt;password&gt;</code> — Accedi al tuo profilo.</li>
+  	  	<li><code>/tpa &lt;player&gt;</code> — Invia una richiesta di teletrasporto a un player.</li>
+  	  	<li><code>/sethome</code> — Imposta lo spawn alla tua casa.</li>
+  	  	<li><code>/home</code> — Teletrasporto alla casa impostata.</li>
+  	  	<li><code>/delhome</code> — Elimina lo spawn della tua casa.</li>
+  	  	<li><code>/back</code> — Teletrasporto al punto di morte.</li>
+  	  	<li><code>/shop</code> — Apri il menù dello shop.</li>
+  	  	<li><code>/sellgui</code> — Apri il menù per vendere i tuoi oggetti.</li>
+  	  	<li><code>/trade &lt;player&gt;</code> — Invia/accetta richiesta di scambio ad altri player.</li>
+  	  </ul>
+  	  <p style="color:var(--text-dim);margin-top:6px;">Se un comando non funziona probabilmente non è abilitato su TaxFraud.info</p>
+  	`,
+  	regole: `
+  	  <h4>Regole base</h4>
+  	  <ol>
+  	  	<li>Niente cheat/client non approvati.</li>
+  	  	<li>Niente grief alle strutture di altri giocatori.</li>
+  	  	<li>Rispetta staff e i giocatori.</li>
+  	  	<li>Usa Discord per segnalare problemi/giocatori o richiedere unban.</li>
+  	  </ol>
+  	  <p style="color:var(--text-dim);margin-top:6px;">Regole complete su Discord.</p>
+  	`
   };
 
   tabs.addEventListener('click', e=>{
-    const tab = e.target.closest('.tutorial-tab');
-    if(!tab) return;
-    const key = tab.dataset.tab;
-    tabs.querySelectorAll('.tutorial-tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    content.innerHTML = TEMPLATES[key] || '';
+  	const tab = e.target.closest('.tutorial-tab');
+  	if(!tab) return;
+  	const key = tab.dataset.tab;
+  	tabs.querySelectorAll('.tutorial-tab').forEach(t=>t.classList.remove('active'));
+  	tab.classList.add('active');
+  	content.innerHTML = TEMPLATES[key] || '';
   });
 })();
 
@@ -896,42 +892,41 @@ ar.
   const downloadBtn = document.getElementById('downloadBtn');
 
   function openViewer(src, desc){
-    viewerImg.src = src;
-    viewerText.textContent = desc || "";
-    downloadBtn.href = src;
-section.
-    viewer.classList.add('active');
+  	viewerImg.src = src;
+  	viewerText.textContent = desc || "";
+  	downloadBtn.href = src;
+  	viewer.classList.add('active');
   }
 
   function closeViewer(){
-    viewer.classList.remove('active');
-    setTimeout(()=>{
-      if(!viewer.classList.contains('active')){
-        viewer.style.display = 'none';
-        void viewer.offsetWidth;
-        viewer.style.display = '';
-      }
-    },180);
+  	viewer.classList.remove('active');
+  	setTimeout(()=>{
+  	  if(!viewer.classList.contains('active')){
+  	  	viewer.style.display = 'none';
+  	  	void viewer.offsetWidth;
+  	  	viewer.style.display = '';
+  	  }
+  	},180);
   }
 
   if (grid){
-    grid.addEventListener('click', e=>{
-  M.
-      const item = e.target.closest('.gallery-item');
-      if(!item) return;
-      openViewer(item.getAttribute('data-img'), item.getAttribute('data-desc'));
-    });
+  	grid.addEventListener('click', e=>{
+  	  const item = e.target.closest('.gallery-item');
+  	  if(!item) return;
+  	  openViewer(item.getAttribute('data-img'), item.getAttribute('data-desc'));
+  	});
   }
   if (closeBtn){ closeBtn.addEventListener('click', closeViewer); }
   if (viewer){
-    viewer.addEventListener('click', e=>{
-      if(e.target === viewer){ closeViewer(); }
-    });
+  	viewer.addEventListener('click', e=>{
+  	  if(e.target === viewer){ closeViewer(); }
+  	});
+s
   }
   document.addEventListener('keydown', e=>{
-    if(e.key === 'Escape' && viewer.classList.contains('active')){
-      closeViewer();
-    }
+  	if(e.key === 'Escape' && viewer.classList.contains('active')){
+  	  closeViewer();
+  	}
   });
 })();
 
@@ -939,15 +934,14 @@ section.
 (function(){
   const el = document.getElementById('ipCopy');
   if(!el) return;
-Example.
   const ip = 'taxfraud.info';
   el.addEventListener('click', ()=>{
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-Con.
-      navigator.clipboard.writeText(ip);
-    }
-    el.textContent = ip + ' (COPIATO!)'; /* Stile GTA */
-    setTimeout(()=>{ el.textContent = ip; }, 1800);
+  	if (navigator.clipboard && navigator.clipboard.writeText) {
+  	  navigator.clipboard.writeText(ip);
+  	}
+  	el.textContent = ip + ' (COPIATO!)'; /* Stile GTA */
+  	setTimeout(()=>{ el.textContent = ip; }, 1800);
+D.
   });
 })();
 
@@ -959,37 +953,35 @@ Con.
   const statusEl  = document.getElementById('mc-status');
   const playersEl = document.getElementById('mc-players');
   const versionEl = document.getElementById('mc-version');
-Example.
 
   async function aggiornaStatus(){
-    if (!statusEl || !playersEl || !versionEl) return;
-    try {
-      statusEl.textContent = 'Caricamento...';
-      statusEl.classList.remove('status-online','status-offline');
+  	if (!statusEl || !playersEl || !versionEl) return;
+  	try {
+  	  statusEl.textContent = 'Caricamento...';
+  	  statusEl.classList.remove('status-online','status-offline');
 
-      const res = await fetch(apiUrl);
-      const data = await res.json();
+  	  const res = await fetch(apiUrl);
+  	  const data = await res.json();
 
-      if (data && data.online) {
-        const playersOnline = data.players && typeof data.players.online === 'number' ? data.players.online : 0;
-        const playersMax    = data.players && typeof data.players.max === 'number'   ? data.players.max   : 0;
-        const version       = data.version || '1.20.1';
+  	  if (data && data.online) {
+  	  	const playersOnline = data.players && typeof data.players.online === 'number' ? data.players.online : 0;
+  	  	const playersMax    = data.players && typeof data.players.max === 'number'  	? data.players.max  	: 0;
+  	  	const version  	  	= data.version || '1.20.1';
 
-        statusEl.textContent = 'Online';
-        statusEl.classList.add('status-online');
-        playersEl.textContent = playersOnline + ' / ' + playersMax;
-        versionEl.textContent = version;
-      } else {
-        statusEl.textContent = 'Offline';
-        statusEl.classList.add('status-offline');
-Examples.
-        playersEl.textContent = '0 / 0';
-      }
-    } catch (e) {
-      statusEl.textContent = 'Errore';
-      statusEl.classList.add('status-offline');
-      playersEl.textContent = '-';
-    }
+  	  	statusEl.textContent = 'Online';
+  	  	statusEl.classList.add('status-online');
+  	  	playersEl.textContent = playersOnline + ' / ' + playersMax;
+  	  	versionEl.textContent = version;
+  	  } else {
+  	  	statusEl.textContent = 'Offline';
+  	  	statusEl.classList.add('status-offline');
+  	  	playersEl.textContent = '0 / 0';
+  	  }
+  	} catch (e) {
+  	  statusEl.textContent = 'Errore';
+  	  statusEl.classList.add('status-offline');
+  	  playersEl.textContent = '-';
+  	}
   }
 
   aggiornaStatus();
@@ -1002,57 +994,54 @@ Examples.
   if (!grid) return;
 
   function creaItem(filename, desc){
-    const wrapper = document.createElement('div');
-    wrapper.className = 'gallery-item';
-    wrapper.setAttribute('data-img', 'gallery/' + filename);
-    wrapper.setAttribute('data-desc', desc);
+  	const wrapper = document.createElement('div');
+  	wrapper.className = 'gallery-item';
+  	wrapper.setAttribute('data-img', 'gallery/' + filename);
+  	wrapper.setAttribute('data-desc', desc);
 
-    const img = document.createElement('img');
-    img.className = 'gallery-thumb';
-    img.src = 'gallery/' + filename;
-Example.
-    img.alt = desc || 'screenshot server';
+  	const img = document.createElement('img');
+  	img.className = 'gallery-thumb';
+  	img.src = 'gallery/' + filename;
+  	img.alt = desc || 'screenshot server';
 
-    const d = document.createElement('div');
-    d.className = 'gallery-desc';
-    d.textContent = desc;
+  	const d = document.createElement('div');
+  	d.className = 'gallery-desc';
+  	d.textContent = desc;
 
-    wrapper.appendChild(img);
-    wrapper.appendChild(d);
-    return wrapper;
+  	wrapper.appendChild(img);
+  	wrapper.appendChild(d);
+  	return wrapper;
   }
 
   fetch('gallery/descriptions.txt')
-    .then(res => {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.text();
-    })
-    .then(text => {
-      grid.innerHTML = '';
-      const lines = text.split(/\r?\n/);
-Example.
-      let has = false;
+  	.then(res => {
+  	  if (!res.ok) throw new Error('HTTP ' + res.status);
+section.
+  	  return res.text();
+  	})
+  	.then(text => {
+  	  grid.innerHTML = '';
+  	  const lines = text.split(/\r?\n/);
+  	  let has = false;
 
-      lines.forEach(line => {
-        line = line.trim();
-        if (!line || line.startsWith('#')) return;
-DEC.
-        const parts = line.split('|');
-        const filename = (parts[0] || '').trim();
-        const desc = (parts[1] || '').trim();
-        if (!filename) return;
-        grid.appendChild(creaItem(filename, desc));
-        has = true;
-      });
+  	  lines.forEach(line => {
+  	  	line = line.trim();
+  	  	if (!line || line.startsWith('#')) return;
+  	  	const parts = line.split('|');
+  	  	const filename = (parts[0] || '').trim();
+  	  	const desc = (parts[1] || '').trim();
+  	  	if (!filename) return;
+  	  	grid.appendChild(creaItem(filename, desc));
+  	  	has = true;
+  	  });
 
-      if (!has) {
-        grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Nessuno screenshot è ancora stato caricato.</p>';
-DE.
-      }
-    })
-    .catch(() => {
-      grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Impossibile caricare la galleria.</p>';
-    });
+  	  if (!has) {
+  	  	grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Nessuno screenshot è ancora stato caricato.</p>';
+  	  }
+  	})
+  	.catch(() => {
+  	  grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Impossibile caricare la galleria.</p>';
+  	});
 })();
 </script>
 
