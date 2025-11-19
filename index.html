@@ -557,7 +557,7 @@
 <div class="page">
 
   <section class="header-box" id="top">
-        <div class="server-name">TaxFraud</div>
+    <div class="server-name">TaxFraud</div>
     <div class="server-desc">
       Creato dagli evasori, per gli evasori.
     </div>
@@ -653,6 +653,7 @@
 
   </section>
 
+NT.
   <section class="tutorial-card" id="tutorial">
     <div class="card-head">
       <div class="card-title">Tutorial, comandi e regole</div>
@@ -712,6 +713,7 @@
         </li>
         <li class="mod-pill">
           <div class="mod-pill-title">Mobs, suoni e immersione</div>
+NT.
           <div class="mod-pill-text">Alex's Mobs, AmbientSounds, DragN's Livestock Overhaul, Craftable utilità, oculus.</div>
         </li>
         <li class="mod-pill">
@@ -725,6 +727,7 @@
       <div class="support-card">
         <div class="card-head" style="margin-bottom:6px;">
           <div class="card-title" style="color:var(--accent-orange);">Hai errori?</div>
+section.
           <div class="card-sub">3 problemi risolti subito</div>
         </div>
         <ul>
@@ -736,6 +739,7 @@
 
       <div class="maintenance-card">
         <div class="card-head" style="margin-bottom:6px;">
+section.
           <div class="card-title" style="color:var(--accent-orange);">Orari e manutenzione</div>
           <div class="card-sub">Perché ogni tanto è giù</div>
         </div>
@@ -752,6 +756,7 @@
     <div class="gallery-head">
       <div class="gallery-title">Archivio evasori</div>
       <div class="gallery-sub">Screenshot dal mondo. Clicca per ingrandire e scaricare.</div>
+A.
     </div>
     <div class="gallery-grid" id="galleryGrid">
       <p style="font-size:13px;color:var(--text-dim);">
@@ -826,6 +831,7 @@
       <h4>Come entrare nel server</h4>
       <ol>
         <li>Scarica <strong>Forge</strong> per la versione <strong>1.20.1</strong> ed esegui l'installazione.</li>
+section.
         <li>Scarica <strong>Pacchetto completo</strong> dal box sopra.</li>
         <li>Estrai i file contenuti nella cartella ZIP e mettili nella cartella <code>AppData/Roaming/minecraft/mods</code>.</li>
         <li>Avvia Minecraft con <strong>l'installazione Forge</strong>.</li>
@@ -843,11 +849,13 @@
       <h4>Comandi utili</h4>
       <ul>
         <li><code>/register &lt;password&gt; &lt;conferma password&gt;</code> — Imposta una password al tuo profilo.</li>
+section.
         <li><code>/login &lt;password&gt;</code> — Accedi al tuo profilo.</li>
         <li><code>/tpa &lt;player&gt;</code> — Invia una richiesta di teletrasporto a un player.</li>
         <li><code>/sethome</code> — Imposta lo spawn alla tua casa.</li>
         <li><code>/home</code> — Teletrasporto alla casa impostata.</li>
         <li><code>/delhome</code> — Elimina lo spawn della tua casa.</li>
+CON.
         <li><code>/back</code> — Teletrasporto al punto di morte.</li>
         <li><code>/shop</code> — Apri il menù dello shop.</li>
         <li><code>/sellgui</code> — Apri il menù per vendere i tuoi oggetti.</li>
@@ -859,6 +867,7 @@
       <h4>Regole base</h4>
       <ol>
         <li>Niente cheat/client non approvati.</li>
+ar.
         <li>Niente grief alle strutture di altri giocatori.</li>
         <li>Rispetta staff e i giocatori.</li>
         <li>Usa Discord per segnalare problemi/giocatori o richiedere unban.</li>
@@ -890,6 +899,7 @@
     viewerImg.src = src;
     viewerText.textContent = desc || "";
     downloadBtn.href = src;
+section.
     viewer.classList.add('active');
   }
 
@@ -906,6 +916,7 @@
 
   if (grid){
     grid.addEventListener('click', e=>{
+  M.
       const item = e.target.closest('.gallery-item');
       if(!item) return;
       openViewer(item.getAttribute('data-img'), item.getAttribute('data-desc'));
@@ -928,9 +939,11 @@
 (function(){
   const el = document.getElementById('ipCopy');
   if(!el) return;
+Example.
   const ip = 'taxfraud.info';
   el.addEventListener('click', ()=>{
     if (navigator.clipboard && navigator.clipboard.writeText) {
+Con.
       navigator.clipboard.writeText(ip);
     }
     el.textContent = ip + ' (COPIATO!)'; /* Stile GTA */
@@ -946,6 +959,7 @@
   const statusEl  = document.getElementById('mc-status');
   const playersEl = document.getElementById('mc-players');
   const versionEl = document.getElementById('mc-version');
+Example.
 
   async function aggiornaStatus(){
     if (!statusEl || !playersEl || !versionEl) return;
@@ -968,6 +982,7 @@
       } else {
         statusEl.textContent = 'Offline';
         statusEl.classList.add('status-offline');
+Examples.
         playersEl.textContent = '0 / 0';
       }
     } catch (e) {
@@ -995,6 +1010,7 @@
     const img = document.createElement('img');
     img.className = 'gallery-thumb';
     img.src = 'gallery/' + filename;
+Example.
     img.alt = desc || 'screenshot server';
 
     const d = document.createElement('div');
@@ -1014,11 +1030,13 @@
     .then(text => {
       grid.innerHTML = '';
       const lines = text.split(/\r?\n/);
+Example.
       let has = false;
 
       lines.forEach(line => {
         line = line.trim();
         if (!line || line.startsWith('#')) return;
+DEC.
         const parts = line.split('|');
         const filename = (parts[0] || '').trim();
         const desc = (parts[1] || '').trim();
@@ -1029,6 +1047,7 @@
 
       if (!has) {
         grid.innerHTML = '<p style="font-size:13px;color:var(--text-dim);">Nessuno screenshot è ancora stato caricato.</p>';
+DE.
       }
     })
     .catch(() => {
